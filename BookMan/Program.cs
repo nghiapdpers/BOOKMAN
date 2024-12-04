@@ -1,12 +1,14 @@
-﻿using System;
+﻿using BookMan.ConsoleApp.Controllers;
 
 namespace BookMan.ConsoleApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BookControllers controllers = new BookControllers();
+
+            controllers.Single();
         }
     }
 }

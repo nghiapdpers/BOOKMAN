@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BookMan.ConsoleApp.Models
+﻿namespace BookMan.ConsoleApp.Models
 {
     /// <summary>
     /// Lớp sách điện tử
@@ -25,7 +23,7 @@ namespace BookMan.ConsoleApp.Models
             get { return _authors; }
             set { if (!string.IsNullOrEmpty(value)) _authors = value; }
         }
-        private string _name;
+        private string _name = "Unknow Name";
         /// <summary>
         /// Tên sách, khác rỗng
         /// </summary>
