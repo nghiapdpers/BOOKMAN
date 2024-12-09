@@ -21,5 +21,11 @@
             BookSingleView view = new BookSingleView(book);
             view.Render();
         }
+
+        public void Create()
+        {
+            BookCreateView view = new BookCreateView();
+            view.Render();
+        }
     }
 }

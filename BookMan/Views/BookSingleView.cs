@@ -3,6 +3,9 @@
 namespace BookMan.ConsoleApp.Views
 {
     using Models;
+    /// <summary>
+    /// class hiển thị một cuốn sách
+    /// </summary>
     internal class BookSingleView
     {
         public Book Model;
@@ -11,16 +14,17 @@ namespace BookMan.ConsoleApp.Views
             this.Model = model;
         }
 
+        /// <summary>
+        /// Hiển thị thông tin cuốn sách
+        /// </summary>
         public void Render()
         {
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
-
             if (Model == null)
             {
                 WriteLine("Không tìm thấy cuốn sách.", ConsoleColor.Red);
                 return;
             }
-            WriteLine("Thông tin sách", ConsoleColor.Green);
+            WriteLine("____Thông tin sách____", ConsoleColor.Green);
 
             WriteLine($"Tên sách:               {Model.Name}");
             WriteLine($"Tác giả:                {Model.Authors}");
