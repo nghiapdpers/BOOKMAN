@@ -1,19 +1,23 @@
 ﻿using System;
+
 namespace BookMan.ConsoleApp.Views
 {
     using Framework;
+    using Models;
 
-    /// <summary>
-    /// class tạo thông tin cuốn sách
-    /// </summary>
-    internal class BookCreateView
+    internal class BookUpdateView
     {
-        /// <summary>
-        /// Nhập thông tin cho cuốn sách
-        /// </summary>
-        public void Render()
+        private Book model;
+
+        public BookUpdateView(Book model)
         {
-            ViewHelp.WriteLine("________Nhập đầu sách_________", ConsoleColor.DarkGreen);
+            this.model = model;
+        }
+
+        private void Render()
+        {
+            ViewHelp.WriteLine("____Cập nhật thông tin sách____", ConsoleColor.DarkYellow);
+
             var name = ViewHelp.InputString("Tên sách: ", ConsoleColor.DarkRed);
             var authors = ViewHelp.InputString("Tác giả: ", ConsoleColor.DarkRed);
             var publisher = ViewHelp.InputString("Nhà xuất bản: ", ConsoleColor.DarkRed);

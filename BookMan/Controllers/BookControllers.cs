@@ -6,7 +6,7 @@
     {
         public void Single()
         {
-            Book book = new Book
+            Book book = new()
             {
                 Id = 1,
                 Authors = "Ngô Tất Tố",
@@ -18,13 +18,13 @@
                 Tags = "Văn học đương đại",
                 Rate = 5
             };
-            BookSingleView view = new BookSingleView(book);
+            BookSingleView view = new(book);
             view.Render();
         }
 
         public void Create()
         {
-            BookCreateView view = new BookCreateView();
+            BookCreateView view = new();
             view.Render();
         }
     }
