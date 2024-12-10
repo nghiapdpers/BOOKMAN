@@ -26,6 +26,9 @@ namespace BookMan.ConsoleApp
                     case "create":
                         controllers.Create();
                         break;
+                    case "update":
+                        controllers.Update();
+                        break;
 
                     //system command
                     case "q":

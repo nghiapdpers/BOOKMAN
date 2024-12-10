@@ -14,19 +14,19 @@ namespace BookMan.ConsoleApp.Views
             this.model = model;
         }
 
-        private void Render()
+        public void Render()
         {
             ViewHelp.WriteLine("____Cập nhật thông tin sách____", ConsoleColor.DarkYellow);
 
-            var name = ViewHelp.InputString("Tên sách: ", ConsoleColor.DarkRed);
-            var authors = ViewHelp.InputString("Tác giả: ", ConsoleColor.DarkRed);
-            var publisher = ViewHelp.InputString("Nhà xuất bản: ", ConsoleColor.DarkRed);
-            var year = ViewHelp.InputInt("Năm xuất bản: ", ConsoleColor.DarkRed);
-            var edition = ViewHelp.InputInt("Tái bản lần thứ: ", ConsoleColor.DarkRed);
-            var isbn = ViewHelp.InputInt("Mã ISBN: ", ConsoleColor.DarkRed);
-            var shortDescription = ViewHelp.InputInt("Mô tả sách: ", ConsoleColor.DarkRed);
-            var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", ConsoleColor.DarkRed);
-            var filePath = ViewHelp.InputInt("Đường dẫn file sách: ", ConsoleColor.DarkRed);
+            var name = ViewHelp.InputString("Tên sách: ", model.Name, ConsoleColor.DarkRed);
+            var authors = ViewHelp.InputString("Tác giả: ", model.Authors, ConsoleColor.DarkRed);
+            var publisher = ViewHelp.InputString("Nhà xuất bản: ", model.Publisher, ConsoleColor.DarkRed);
+            var year = ViewHelp.InputInt("Năm xuất bản: ", model.Year, ConsoleColor.DarkRed);
+            var edition = ViewHelp.InputInt("Tái bản lần thứ: ", model.Edition, ConsoleColor.DarkRed);
+            var isbn = ViewHelp.InputString("Mã ISBN: ", model.Isbn, ConsoleColor.DarkRed);
+            var shortDescription = ViewHelp.InputString("Mô tả sách: ", model.ShortDescription, ConsoleColor.DarkRed);
+            var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", model.Rate, ConsoleColor.DarkRed);
+            var filePath = ViewHelp.InputString("Đường dẫn file sách: ", model.File, ConsoleColor.DarkRed);
         }
     }
 }

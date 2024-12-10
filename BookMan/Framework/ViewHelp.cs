@@ -52,6 +52,29 @@ namespace BookMan.ConsoleApp.Framework
         }
 
         /// <summary>
+        /// Hiển thị chuỗi cũ, nhập vào chuỗi mới
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="titleColor"></param>
+        /// <param name="inputColor"></param>
+        /// <returns>Chuỗi mang giá trị mới</returns>
+        public static string InputString(string title, string oldValue, ConsoleColor titleColor = ConsoleColor.White, ConsoleColor inputColor = ConsoleColor.White)
+        {
+            Write(title + "[old]: ", titleColor);
+            WriteLine(oldValue, inputColor);
+            Write(title + "[new]: ", titleColor);
+            Console.ForegroundColor = inputColor;
+            var input = Console.ReadLine();
+            Console.ResetColor();
+            if (string.IsNullOrEmpty(input))
+            {
+                return "";
+            }
+            return input;
+        }
+
+        /// <summary>
         /// Nhập thông tin số
         /// </summary>
         /// <param name="title">Tiêu đề</param>
@@ -71,6 +94,26 @@ namespace BookMan.ConsoleApp.Framework
         }
 
         /// <summary>
+        /// Hiển thị số cũ, nhập số mới
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="titleColor"></param>
+        /// <param name="inputColor"></param>
+        /// <returns>Số mới</returns>
+        public static int InputInt(string title, int oldValue, ConsoleColor titleColor = ConsoleColor.White, ConsoleColor inputColor = ConsoleColor.White)
+        {
+            while (true)
+            {
+                var input = InputString(title, oldValue.ToString(), titleColor, inputColor);
+                if (int.TryParse(input, out int value))
+                {
+                    return value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Nhập thông tin true/false
         /// </summary>
         /// <param name="title">Tiêu đề</param>
@@ -80,6 +123,26 @@ namespace BookMan.ConsoleApp.Framework
         public static bool InputBool(string title, ConsoleColor titleColor = ConsoleColor.White, ConsoleColor inputColor = ConsoleColor.White)
         {
             Write(title + "[y/n]: ", titleColor);
+            Console.ForegroundColor = inputColor;
+            var input = Console.ReadKey();
+            Console.WriteLine();
+            bool @bool = input.Key == ConsoleKey.Y ? true : false;
+            Console.ResetColor();
+            return @bool;
+        }
+
+        /// <summary>
+        /// Hiển thị tùy chọn cũ, nhập tùy chọn mới
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="titleColor"></param>
+        /// <param name="inputColor"></param>
+        /// <returns></returns>
+        public static bool InputBool(string title, bool oldValue, ConsoleColor titleColor = ConsoleColor.White, ConsoleColor inputColor = ConsoleColor.White)
+        {
+            Write(title + "[old]: ", titleColor);
+            WriteLine(oldValue ? "Có[y]" : "Không[n]", inputColor);
+            Write(title + "[new - y/n]: ", titleColor);
             Console.ForegroundColor = inputColor;
             var input = Console.ReadKey();
             Console.WriteLine();

@@ -19,10 +19,10 @@ namespace BookMan.ConsoleApp.Views
             var publisher = ViewHelp.InputString("Nhà xuất bản: ", ConsoleColor.DarkRed);
             var year = ViewHelp.InputInt("Năm xuất bản: ", ConsoleColor.DarkRed);
             var edition = ViewHelp.InputInt("Tái bản lần thứ: ", ConsoleColor.DarkRed);
-            var isbn = ViewHelp.InputInt("Mã ISBN: ", ConsoleColor.DarkRed);
-            var shortDescription = ViewHelp.InputInt("Mô tả sách: ", ConsoleColor.DarkRed);
+            var isbn = ViewHelp.InputString("Mã ISBN: ", ConsoleColor.DarkRed);
+            var shortDescription = ViewHelp.InputString("Mô tả sách: ", ConsoleColor.DarkRed);
             var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", ConsoleColor.DarkRed);
-            var filePath = ViewHelp.InputInt("Đường dẫn file sách: ", ConsoleColor.DarkRed);
+            var filePath = ViewHelp.InputString("Đường dẫn file sách: ", ConsoleColor.DarkRed);
         }
     }
 }
