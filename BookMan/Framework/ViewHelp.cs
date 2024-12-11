@@ -44,7 +44,7 @@ namespace BookMan.ConsoleApp.Framework
             Console.ForegroundColor = inputColor;
             var input = Console.ReadLine();
             Console.ResetColor();
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input.Trim()))
             {
                 return "";
             }
@@ -67,9 +67,9 @@ namespace BookMan.ConsoleApp.Framework
             Console.ForegroundColor = inputColor;
             var input = Console.ReadLine();
             Console.ResetColor();
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input.Trim()))
             {
-                return "";
+                return oldValue;
             }
             return input;
         }
@@ -147,6 +147,10 @@ namespace BookMan.ConsoleApp.Framework
             var input = Console.ReadKey();
             Console.WriteLine();
             bool @bool = input.Key == ConsoleKey.Y ? true : false;
+            if (input.Key == ConsoleKey.Enter)
+            {
+                @bool = oldValue;
+            }
             Console.ResetColor();
             return @bool;
         }
