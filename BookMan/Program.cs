@@ -29,6 +29,9 @@ namespace BookMan.ConsoleApp
                     case "update":
                         controllers.Update();
                         break;
+                    case "list":
+                        controllers.List();
+                        break;
 
                     //system command
                     case "q":

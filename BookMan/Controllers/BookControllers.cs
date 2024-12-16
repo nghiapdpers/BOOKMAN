@@ -46,5 +46,20 @@
             BookUpdateView view = new(book);
             view.Render();
         }
+
+        public void List()
+        {
+            Book[] books = new Book[]
+            {
+                new Book() { Id = 1, Name = "Hello" },
+                new Book() { Id = 2, Name = "Hello 2" },
+                new Book() { Id = 3, Name = "Hello 3" },
+                new Book() { Id = 4, Name = "Hello 4" },
+                new Book() { Id = 5, Name = "Hello 5" },
+            };
+
+            BookListView view = new(books);
+            view.Render();
+        }
     }
 }
