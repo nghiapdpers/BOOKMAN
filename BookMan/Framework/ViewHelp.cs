@@ -124,9 +124,8 @@ namespace BookMan.ConsoleApp.Framework
         {
             Write(title + "[y/n]: ", titleColor);
             Console.ForegroundColor = inputColor;
-            var input = Console.ReadKey();
-            Console.WriteLine();
-            bool @bool = input.Key == ConsoleKey.Y ? true : false;
+            var input = Console.ReadLine();
+            bool @bool = input.ToBool();
             Console.ResetColor();
             return @bool;
         }
@@ -144,10 +143,9 @@ namespace BookMan.ConsoleApp.Framework
             WriteLine(oldValue ? "Có[y]" : "Không[n]", inputColor);
             Write(title + "[new - y/n]: ", titleColor);
             Console.ForegroundColor = inputColor;
-            var input = Console.ReadKey();
-            Console.WriteLine();
-            bool @bool = input.Key == ConsoleKey.Y ? true : false;
-            if (input.Key == ConsoleKey.Enter)
+            var input = Console.ReadLine();
+            bool @bool = input.ToBool();
+            if (string.IsNullOrEmpty(input.Trim()))
             {
                 @bool = oldValue;
             }

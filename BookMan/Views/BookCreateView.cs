@@ -22,6 +22,7 @@ namespace BookMan.ConsoleApp.Views
             var isbn = ViewHelp.InputString("Mã ISBN: ", ConsoleColor.DarkRed);
             var shortDescription = ViewHelp.InputString("Mô tả sách: ", ConsoleColor.DarkRed);
             var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", ConsoleColor.DarkRed);
+            var reading = ViewHelp.InputBool("Đánh dấu sách đang đọc: ", ConsoleColor.DarkRed);
             var filePath = ViewHelp.InputString("Đường dẫn file sách: ", ConsoleColor.DarkRed);
         }
     }

@@ -37,7 +37,7 @@ namespace BookMan.ConsoleApp.Views
             ViewHelp.WriteLine($"Đánh giá cá nhân:       {Model.Rate}/5", ConsoleColor.DarkYellow);
             ViewHelp.WriteLine($"Tên File sách:          {Model.FileName}");
             ViewHelp.WriteLine($"Địa chỉ File sách:      {Model.File}");
-            ViewHelp.WriteLine($"Đánh dấu sách:          {(Model.Reading ? "Đang đọc" : "Chưa đánh dấu")}", Model.Reading ? ConsoleColor.Magenta : ConsoleColor.DarkRed);
+            ViewHelp.WriteLine($"Đánh dấu sách:          {Model.Reading.ToString(BooleanFormat.reading)}", Model.Reading ? ConsoleColor.Magenta : ConsoleColor.DarkRed);
             if (Model.Reading)
                 ViewHelp.WriteLine($"Đọc tới trang:          {Model.PageReading}", ConsoleColor.DarkMagenta);
             ViewHelp.WriteLine($"Số phút đã đọc:         {Model.TotalMinutesRead}", ConsoleColor.Yellow);
