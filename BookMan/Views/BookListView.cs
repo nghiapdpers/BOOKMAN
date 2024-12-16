@@ -2,6 +2,9 @@
 {
     using Framework;
     using Models;
+    /// <summary>
+    /// Class hiển thị danh sách các cuốn sách
+    /// </summary>
     internal class BookListView
     {
         public Book[] Books;
@@ -11,6 +14,9 @@
             Books = books;
         }
 
+        /// <summary>
+        /// Hiển thị ra danh sách các cuốn sách
+        /// </summary>
         public void Render()
         {
             if (Books.Length == 0)
@@ -23,7 +29,7 @@
             {
                 var book = Books[i];
 
-                ViewHelp.Write($"{i + 1}. ");
+                ViewHelp.Write($"[{book.Id}] ");
                 ViewHelp.WriteLine(book.Name, book.Reading ? System.ConsoleColor.DarkYellow : System.ConsoleColor.White);
             }
         }

@@ -4,7 +4,9 @@ namespace BookMan.ConsoleApp.Views
 {
     using Framework;
     using Models;
-
+    /// <summary>
+    /// Class cập nhật thông tin sách
+    /// </summary>
     internal class BookUpdateView
     {
         private Book model;
@@ -14,6 +16,9 @@ namespace BookMan.ConsoleApp.Views
             this.model = model;
         }
 
+        /// <summary>
+        /// Hiển thị thông tin và nhập thông tin mới cho sách
+        /// </summary>
         public void Render()
         {
             ViewHelp.WriteLine("____Cập nhật thông tin sách____", ConsoleColor.DarkYellow);

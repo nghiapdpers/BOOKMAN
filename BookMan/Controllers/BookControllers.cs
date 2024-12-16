@@ -1,64 +1,70 @@
 ﻿namespace BookMan.ConsoleApp.Controllers
 {
+    using BookMan.ConsoleApp.DataServices;
     using Models;
     using Views;
+    /// <summary>
+    /// Controllers sách
+    /// </summary>
     internal class BookControllers
     {
-        public void Single()
+        /// <summary>
+        /// Liên kết công cụ lưu trữ dữ liệu
+        /// </summary>
+        protected Repository Repository;
+
+        public BookControllers(SimpleDataAcess context)
         {
-            Book book = new()
-            {
-                Id = 1,
-                Authors = "Ngô Tất Tố",
-                Name = "Tắt đèn",
-                Publisher = "Nhà xuất bản Văn học",
-                Year = 2010,
-                Edition = 4,
-                Isbn = "9999",
-                Tags = "Văn học đương đại",
-                Rate = 5
-            };
+            Repository = new(context);
+        }
+
+        /// <summary>
+        /// Hiển thị thông tin 1 cuốn sách
+        /// </summary>
+        /// <param name="id"></param>
+        public void Single(int id)
+        {
+            Book book = Repository.Get(id);
             BookSingleView view = new(book);
             view.Render();
         }
 
+        /// <summary>
+        /// Tạo một cuốn sách
+        /// </summary>
         public void Create()
         {
             BookCreateView view = new();
             view.Render();
         }
 
-        public void Update()
+        /// <summary>
+        /// Cập nhật thông tin 1 cuốn sách
+        /// </summary>
+        /// <param name="id"></param>
+        public void Update(int id)
         {
-            Book book = new()
-            {
-                Id = 1,
-                Authors = "Ngô Tất Tố",
-                Name = "Tắt đèn",
-                Publisher = "Nhà xuất bản Văn học",
-                Year = 2010,
-                Edition = 4,
-                Isbn = "9999",
-                Tags = "Văn học đương đại",
-                Rate = 5
-            };
-
+            Book book = Repository.Get(id);
             BookUpdateView view = new(book);
             view.Render();
         }
 
-        public void List()
+        /// <summary>
+        /// Hiển thị danh sách cuốn sách
+        /// </summary>
+        /// <param name="keyword"></param>
+        public void List(string keyword = "")
         {
-            Book[] books = new Book[]
-            {
-                new Book() { Id = 1, Name = "Hello" },
-                new Book() { Id = 2, Name = "Hello 2" },
-                new Book() { Id = 3, Name = "Hello 3" },
-                new Book() { Id = 4, Name = "Hello 4" },
-                new Book() { Id = 5, Name = "Hello 5" },
-            };
+            BookListView view = new(Repository.GetAll());
+            view.Render();
+        }
 
-            BookListView view = new(books);
+        /// <summary>
+        /// Hiển thị thông tin hỗ trợ.
+        /// </summary>
+        public void Help()
+        {
+            BookHelpView view = new();
             view.Render();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using BookMan.ConsoleApp.Controllers;
+using BookMan.ConsoleApp.DataServices;
 using System;
 
 namespace BookMan.ConsoleApp
@@ -9,7 +10,7 @@ namespace BookMan.ConsoleApp
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
-            BookControllers controllers = new BookControllers();
+            BookControllers controllers = new BookControllers(new SimpleDataAcess());
 
             while (true)
             {
@@ -21,13 +22,13 @@ namespace BookMan.ConsoleApp
                 {
                     //function command
                     case "single":
-                        controllers.Single();
+                        controllers.Single(1);
                         break;
                     case "create":
                         controllers.Create();
                         break;
                     case "update":
-                        controllers.Update();
+                        controllers.Update(1);
                         break;
                     case "list":
                         controllers.List();
@@ -42,6 +43,11 @@ namespace BookMan.ConsoleApp
                     case "clear":
                     case "cls":
                         Console.Clear();
+                        break;
+                    case "/?":
+                    case "-h":
+                    case "--help":
+                        controllers.Help();
                         break;
 
                     default:
