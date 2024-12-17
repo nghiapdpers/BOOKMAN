@@ -2,18 +2,22 @@
 
 namespace BookMan.ConsoleApp.Framework
 {
+    /// sử dụng alias cho kiểu dữ liệu phức tạp.
+    using DBoolFormatString = Dictionary<BooleanFormat, Dictionary<bool, string>>;
+    using DStringBoolean = Dictionary<string, bool>;
     public enum BooleanFormat
     {
         reading,
         yesno,
     }
 
+
     /// <summary>
     /// Extension method cho các kiểu dữ liệu
     /// </summary>
     public static class Extension
     {
-        private static readonly Dictionary<BooleanFormat, Dictionary<bool, string>> dBooleanToString = new()
+        private static readonly DBoolFormatString dBooleanToString = new()
         {
             {
                 BooleanFormat.reading, new() { {true, "Đang đọc" }, {false, "Chưa đánh dấu" } }
@@ -23,7 +27,7 @@ namespace BookMan.ConsoleApp.Framework
             },
         };
 
-        private static readonly Dictionary<string, bool> dStringToTrue = new()
+        private static readonly DStringBoolean dStringToTrue = new()
         {
             {"y", true },
             {"true", true },

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace BookMan.ConsoleApp.Views
 {
+    /// <summary>
+    /// class hiển thị thông tin trợ giúp
+    /// </summary>
     internal class BookHelpView
     {
         private Dictionary<string, string> _help = new()
@@ -15,6 +18,9 @@ namespace BookMan.ConsoleApp.Views
             {"clear/cls", "xóa màn hình" },
         };
 
+        /// <summary>
+        /// Hiển thị thông tin trợ giúp.
+        /// </summary>
         public void Render()
         {
             foreach (var item in _help)
