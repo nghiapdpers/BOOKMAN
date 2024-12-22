@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BookMan.ConsoleApp.Framework
 {
@@ -17,9 +18,26 @@ namespace BookMan.ConsoleApp.Framework
         /// </summary>
         /// <param name="key">Lệnh</param>
         /// <param name="value">Danh sách option</param>
-        public static void AddListOptions(string key, string[] value)
+        public static void AddListOptions(string key, string[] value = null)
         {
-            ListOptions.Add(key, value);
+            if (value == null)
+                ListOptions.Add(key, Array.Empty<string>());
+            else
+                ListOptions.Add(key, value);
+        }
+
+
+        /// <summary>
+        /// Thêm danh sách options
+        /// </summary>
+        /// <param name="key">Danh sách lệnh</param>
+        /// <param name="value">Danh sách option</param>
+        public static void AddListOptions(string[] key, string[] value = null)
+        {
+            for (int i = 0; i < key.Length; i++)
+            {
+                AddListOptions(key[i], value);
+            }
         }
 
         /// <summary>

@@ -4,12 +4,19 @@ using System.Text.RegularExpressions;
 
 namespace BookMan.ConsoleApp.Framework
 {
+    /// Khai báo các kiểu dữ liệu sử dụng
     using HelperMap = Dictionary<string, HelpAction>;
     using RouterMap = Dictionary<string, ControllerAction>;
     public delegate void ControllerAction(List<string> options, Parameter parameter);
     public delegate void HelpAction();
+    /// <summary>
+    /// Class Router ánh xạ các lệnh của chương trình
+    /// </summary>
     public class Router
     {
+        /// <summary>
+        /// Singleton cho class
+        /// </summary>
         private static Router _instance;
         public static Router Instance
         {
@@ -21,7 +28,13 @@ namespace BookMan.ConsoleApp.Framework
                 return _instance;
             }
         }
+        /// <summary>
+        /// Map các lệnh được ánh xạ
+        /// </summary>
         private RouterMap _routerMap;
+        /// <summary>
+        /// Map các hướng dẫn được ánh xạ
+        /// </summary>
         private HelperMap _helperMap;
         private Router()
         {
@@ -29,6 +42,26 @@ namespace BookMan.ConsoleApp.Framework
             _helperMap = new HelperMap();
         }
 
+        /// <summary>
+        /// Đăng ký một lệnh vào router
+        /// </summary>
+        /// <param name="key">lệnh đăng ký</param>
+        /// <param name="action">hàm khi gọi tới lệnh đó</param>
+        /// <param name="help">hàm hướng dẫn cho lệnh đó</param>
+        public void Register(string[] key, ControllerAction action, HelpAction help = null)
+        {
+            for (int i = 0; i < key.Length; i++)
+            {
+                Register(key[i], action, help);
+            }
+        }
+
+        /// <summary>
+        /// Đăng ký một lệnh vào router
+        /// </summary>
+        /// <param name="key">lệnh đăng ký</param>
+        /// <param name="action">hàm khi gọi tới lệnh đó</param>
+        /// <param name="help">hàm hướng dẫn cho lệnh đó</param>
         public void Register(string key, ControllerAction action, HelpAction help = null)
         {
             if (!_routerMap.ContainsKey(key))
@@ -39,6 +72,11 @@ namespace BookMan.ConsoleApp.Framework
             }
         }
 
+        /// <summary>
+        /// Thực thi lệnh
+        /// </summary>
+        /// <param name="command">chuỗi lệnh nhận vào</param>
+        /// <exception cref="Exception">Ngoại lệ khi lệnh không hợp lệ</exception>
         public void Forward(string command)
         {
             var req = new Request(command);

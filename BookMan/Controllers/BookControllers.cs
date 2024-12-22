@@ -1,9 +1,7 @@
 ﻿namespace BookMan.ConsoleApp.Controllers
 {
     using BookMan.ConsoleApp.DataServices;
-    using BookMan.ConsoleApp.Framework;
     using Models;
-    using System.Collections.Generic;
     using Views;
     /// <summary>
     /// Controllers sách
@@ -64,7 +62,7 @@
         /// <summary>
         /// Hiển thị thông tin hỗ trợ.
         /// </summary>
-        public void Help(List<string> options, Parameter parameter)
+        public void Help(string Route)
         {
             BookHelpView view = new();
             view.Render();
