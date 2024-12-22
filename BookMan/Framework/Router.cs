@@ -4,8 +4,64 @@ using System.Text.RegularExpressions;
 
 namespace BookMan.ConsoleApp.Framework
 {
+    using HelperMap = Dictionary<string, HelpAction>;
+    using RouterMap = Dictionary<string, ControllerAction>;
+    public delegate void ControllerAction(List<string> options, Parameter parameter);
+    public delegate void HelpAction();
     public class Router
     {
+        private static Router _instance;
+        public static Router Instance
+        {
+            private set { }
+            get
+            {
+                _instance ??= new Router();
+
+                return _instance;
+            }
+        }
+        private RouterMap _routerMap;
+        private HelperMap _helperMap;
+        private Router()
+        {
+            _routerMap = new RouterMap();
+            _helperMap = new HelperMap();
+        }
+
+        public void Register(string key, ControllerAction action, HelpAction help = null)
+        {
+            if (!_routerMap.ContainsKey(key))
+            {
+                _routerMap[key] = action;
+                if (help != null)
+                    _helperMap[key] = help;
+            }
+        }
+
+        public void Forward(string command)
+        {
+            var req = new Request(command);
+            if (!_routerMap.ContainsKey(req.Route))
+            {
+                throw new Exception("Không có lệnh này, vui lòng thử lại.\nSử dụng -h hoặc --help để biết thêm chi tiết.");
+            }
+
+            var validHelp = req.ListOptions.Contains("--help")
+                || req.ListOptions.Contains("-h");
+
+            if (validHelp)
+            {
+                if (_helperMap.ContainsKey(req.Route))
+                    _helperMap[req.Route]?.Invoke();
+                else
+                    throw new Exception("Không có hướng dẫn cho lệnh này, vui lòng thử lại.\nSử dụng -h hoặc --help để biết thêm chi tiết.");
+                return;
+            }
+
+            _routerMap[req.Route]?.Invoke(req.ListOptions, req.Parameters);
+        }
+
         /// <summary>
         /// Class yêu cầu từ người dùng
         /// <code>
@@ -49,7 +105,7 @@ namespace BookMan.ConsoleApp.Framework
 
                 if (invalidRoute)
                 {
-                    throw new Exception("Lệnh không hợp lệ, vui lòng thử lại.\nSử dụng /? hoặc -h hoặc --help để biết thêm chi tiết.");
+                    throw new Exception("Lệnh không hợp lệ, vui lòng thử lại.\nSử dụng -h hoặc --help để biết thêm chi tiết.");
                 }
                 // Route luôn là lệnh đầu tiên
                 Route = lRequest[0];
@@ -86,7 +142,5 @@ namespace BookMan.ConsoleApp.Framework
                 }
             }
         }
-
-
     }
 }

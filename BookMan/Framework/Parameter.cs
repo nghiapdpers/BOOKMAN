@@ -5,7 +5,7 @@ namespace BookMan.ConsoleApp.Framework
     /// <summary>
     /// Class tham số của lệnh truyền vào
     /// </summary>
-    internal class Parameter
+    public class Parameter
     {
         private readonly Dictionary<string, string> _parameters = new Dictionary<string, string>();
 

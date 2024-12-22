@@ -1,5 +1,6 @@
 ﻿using BookMan.ConsoleApp.Controllers;
 using BookMan.ConsoleApp.DataServices;
+using BookMan.ConsoleApp.Framework;
 using System;
 
 namespace BookMan.ConsoleApp
@@ -11,49 +12,53 @@ namespace BookMan.ConsoleApp
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
             BookControllers controllers = new BookControllers(new SimpleDataAcess());
+            Router.Instance.Register("help", controllers.Help);
+            Options.AddListOptions("help", new string[] { "--help" });
 
             while (true)
             {
 
-                Console.Write("BookManCLI> ");
+                ViewHelp.Write("#BookManCLI>", ConsoleColor.DarkGreen);
                 string input = Console.ReadLine();
 
-                switch (input.ToLower())
-                {
-                    //function command
-                    case "single":
-                        controllers.Single(1);
-                        break;
-                    case "create":
-                        controllers.Create();
-                        break;
-                    case "update":
-                        controllers.Update(1);
-                        break;
-                    case "list":
-                        controllers.List();
-                        break;
+                Router.Instance.Forward(input);
 
-                    //system command
-                    case "q":
-                    case "quit":
-                    case "exit":
-                        Environment.Exit(0);
-                        break;
-                    case "clear":
-                    case "cls":
-                        Console.Clear();
-                        break;
-                    case "/?":
-                    case "-h":
-                    case "--help":
-                        controllers.Help();
-                        break;
+                //switch (input.ToLower())
+                //{
+                //    //function command
+                //    case "single":
+                //        controllers.Single(1);
+                //        break;
+                //    case "create":
+                //        controllers.Create();
+                //        break;
+                //    case "update":
+                //        controllers.Update(1);
+                //        break;
+                //    case "list":
+                //        controllers.List();
+                //        break;
 
-                    default:
-                        Console.Error.WriteLine("Không tìm thấy lệnh này. Sử dụng /? hoặc -h hoặc --help để xem hướng dẫn.");
-                        break;
-                }
+                //    //system command
+                //    case "q":
+                //    case "quit":
+                //    case "exit":
+                //        Environment.Exit(0);
+                //        break;
+                //    case "clear":
+                //    case "cls":
+                //        Console.Clear();
+                //        break;
+                //    case "/?":
+                //    case "-h":
+                //    case "--help":
+                //        controllers.Help();
+                //        break;
+
+                //    default:
+                //        Console.Error.WriteLine("Không tìm thấy lệnh này. Sử dụng /? hoặc -h hoặc --help để xem hướng dẫn.");
+                //        break;
+                //}
             }
         }
     }
