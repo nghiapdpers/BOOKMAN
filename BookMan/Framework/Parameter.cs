@@ -43,7 +43,7 @@ namespace BookMan.ConsoleApp.Framework
                 var pSplit = p.Split('=');
                 if (pSplit.Length == 2)
                 {
-                    _parameters[pSplit[0]] = pSplit[1];
+                    _parameters[pSplit[0]] = pSplit[1].Replace("\"", "");
                 }
             }
         }
