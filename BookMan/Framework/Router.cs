@@ -43,10 +43,16 @@ namespace BookMan.ConsoleApp.Framework
                 var regParameter = @"\w+\=\"".*?\""";
                 var strParameter = request;
                 var lRequest = request.Split(" ");
+                bool invalidRoute = lRequest[0].StartsWith("-")
+                    || lRequest[0].StartsWith("--")
+                    || lRequest[0].Contains("=");
 
+                if (invalidRoute)
+                {
+                    throw new Exception("Lệnh không hợp lệ, vui lòng thử lại.\nSử dụng /? hoặc -h hoặc --help để biết thêm chi tiết.");
+                }
                 // Route luôn là lệnh đầu tiên
                 Route = lRequest[0];
-                Console.WriteLine(Route);
                 strParameter = strParameter.Replace(Route, "");
 
                 if (lRequest.Length > 1)
@@ -63,7 +69,6 @@ namespace BookMan.ConsoleApp.Framework
                             if (Options.CheckOptions(Route, data))
                             {
                                 ListOptions.Add(data);
-                                Console.WriteLine(data);
                                 strParameter = strParameter.Replace(data, "");
                             }
                         }
@@ -74,7 +79,6 @@ namespace BookMan.ConsoleApp.Framework
                     foreach (Match m in matches)
                     {
                         @params.Add(m.Value);
-                        Console.WriteLine(m.Value);
                     }
 
                     Parameters = new(@params.ToArray());
