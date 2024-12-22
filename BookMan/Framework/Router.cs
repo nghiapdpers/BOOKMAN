@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace BookMan.ConsoleApp.Framework
 {
@@ -6,6 +8,10 @@ namespace BookMan.ConsoleApp.Framework
     {
         /// <summary>
         /// Class yêu cầu từ người dùng
+        /// <code>
+        /// example: create     --book      name="The new book"
+        /// anatony: Route      Option      Parameter
+        /// </code>
         /// </summary>
         internal class Request
         {
@@ -20,10 +26,11 @@ namespace BookMan.ConsoleApp.Framework
             /// <summary>
             /// Tùy chọn của lệnh
             /// </summary>
-            public string[] Options { get; set; }
+            public List<string> ListOptions;
 
             public Request(string req)
             {
+                ListOptions = new List<string>();
                 Analyze(req);
             }
 
@@ -33,28 +40,45 @@ namespace BookMan.ConsoleApp.Framework
             /// <param name="request"></param>
             public void Analyze(string request)
             {
-                var splRequest = request.Split(" ", System.StringSplitOptions.RemoveEmptyEntries);
-                Route = splRequest[0];
-                if (splRequest.Length > 1)
-                {
-                    List<string> opt = new List<string>();
-                    List<string> @params = new List<string>();
-                    for (int i = 1; i < splRequest.Length; i++)
-                    {
-                        var data = splRequest[i];
+                var regParameter = @"\w+\=\"".*?\""";
+                var strParameter = request;
+                var lRequest = request.Split(" ");
 
+                // Route luôn là lệnh đầu tiên
+                Route = lRequest[0];
+                Console.WriteLine(Route);
+                strParameter = strParameter.Replace(Route, "");
+
+                if (lRequest.Length > 1)
+                {
+                    List<string> @params = new List<string>();
+
+                    for (int i = 1; i < lRequest.Length; i++)
+                    {
+                        var data = lRequest[i];
+
+                        // Options sẽ bắt đầu bằng - hoặc --
                         if (data.StartsWith("-") || data.StartsWith("--"))
                         {
-                            opt.Add(data);
-                        }
-                        else if (data.Contains("="))
-                        {
-                            @params.Add(data);
+                            if (Options.CheckOptions(Route, data))
+                            {
+                                ListOptions.Add(data);
+                                Console.WriteLine(data);
+                                strParameter = strParameter.Replace(data, "");
+                            }
                         }
                     }
 
-                    Options = opt.ToArray();
+                    // Parameter là các thành phần còn lại trong chuỗi
+                    MatchCollection matches = Regex.Matches(strParameter, regParameter);
+                    foreach (Match m in matches)
+                    {
+                        @params.Add(m.Value);
+                        Console.WriteLine(m.Value);
+                    }
+
                     Parameters = new(@params.ToArray());
+
                 }
             }
         }
