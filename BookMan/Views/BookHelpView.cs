@@ -6,7 +6,7 @@ namespace BookMan.ConsoleApp.Views
     /// <summary>
     /// class hiển thị thông tin trợ giúp
     /// </summary>
-    internal class BookHelpView
+    internal class BookHelpView : ViewBase
     {
         private Dictionary<string, string> _help = new()
         {
@@ -21,12 +21,15 @@ namespace BookMan.ConsoleApp.Views
         /// <summary>
         /// Hiển thị thông tin trợ giúp.
         /// </summary>
-        public void Render()
+        public override void Render()
         {
+            ViewHelp.WriteLine($"Các lệnh cơ bản (command)");
             foreach (var item in _help)
             {
-                ViewHelp.WriteLine($"{item.Key,-20}{item.Value}");
+                ViewHelp.WriteLine($"\t{item.Key,-20}{item.Value}\n");
             }
+            ViewHelp.WriteLine($"Sử dụng lệnh theo cấu trúc:\n\tcommand [--options] [parametere=\"value\"]\nhoặc\n\tcommand [parameter=\"value\"] [--options]");
+            ViewHelp.WriteLine($"\nĐể biết chi  tiết về các [--options] và [parameter] của các lệnh, vui lòng sử dụng\n\tcommand --help\nhoặc\n\tcommand -h\nhoặc\n\tcommand /?");
         }
     }
 }

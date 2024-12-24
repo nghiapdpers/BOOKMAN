@@ -6,12 +6,12 @@ namespace BookMan.ConsoleApp.Views
     /// <summary>
     /// class tạo thông tin cuốn sách
     /// </summary>
-    internal class BookCreateView
+    internal class BookCreateView : ViewBase
     {
         /// <summary>
         /// Nhập thông tin cho cuốn sách
         /// </summary>
-        public void Render()
+        public override void Render()
         {
             ViewHelp.WriteLine("________Nhập đầu sách_________", ConsoleColor.DarkGreen);
             var name = ViewHelp.InputString("Tên sách: ", ConsoleColor.DarkRed);
@@ -24,6 +24,18 @@ namespace BookMan.ConsoleApp.Views
             var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", ConsoleColor.DarkRed);
             var reading = ViewHelp.InputBool("Đánh dấu sách đang đọc: ", ConsoleColor.DarkRed);
             var filePath = ViewHelp.InputString("Đường dẫn file sách: ", ConsoleColor.DarkRed);
+        }
+
+        public static new void Help()
+        {
+            ViewHelp.WriteLine("create", ConsoleColor.DarkBlue);
+            ViewHelp.WriteLine("[options]", ConsoleColor.DarkCyan);
+            ViewHelp.WriteLine("--book hoặc -b: tạo một cuốn sách");
+            ViewHelp.WriteLine("--shelf hoặc -sh: tạo một giá sách");
+            ViewHelp.WriteLine("--default hoặc -d: bỏ qua các bước điền thông tin");
+            ViewHelp.WriteLine("[parameter]");
+            ViewHelp.WriteLine("name: tên sách/giá sách");
+            ViewHelp.WriteLine("authors: truyền khi tạo sách");
         }
     }
 }

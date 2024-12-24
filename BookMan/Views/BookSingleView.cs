@@ -7,18 +7,14 @@ namespace BookMan.ConsoleApp.Views
     /// <summary>
     /// class hiển thị một cuốn sách
     /// </summary>
-    internal class BookSingleView
+    internal class BookSingleView : ViewBase<Book>
     {
-        private Book Model;
-        public BookSingleView(Book model)
-        {
-            Model = model;
-        }
+        public BookSingleView(Book model) : base(model) { }
 
         /// <summary>
         /// Hiển thị thông tin cuốn sách
         /// </summary>
-        public void Render()
+        public override void Render()
         {
             if (Model == null)
             {
