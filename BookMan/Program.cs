@@ -19,7 +19,7 @@ namespace BookMan.ConsoleApp
                 try
                 {
 
-                    ViewHelp.Write("#BookManCLI>", ConsoleColor.DarkGreen);
+                    ViewHelp.Write("# BookManCLI >>> ", ConsoleColor.DarkGreen);
                     string input = Console.ReadLine();
 
                     Router.Instance.Forward(input);
@@ -69,6 +69,7 @@ namespace BookMan.ConsoleApp
             }, (o, p) => controllers.Help());
 
             r.Register("create", (o, p) => controllers.Create());
+            r.Register("do-create", (o, p) => controllers.Create());
 
             r.Register("view", (o, p) =>
             {

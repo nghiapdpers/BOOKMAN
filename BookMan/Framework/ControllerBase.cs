@@ -47,12 +47,12 @@ namespace BookMan.ConsoleApp.Framework
         /// </summary>
         public virtual void Help()
         {
-            ViewHelp.WriteLine($"Các lệnh cơ bản (command)");
+            ViewHelp.WriteLine($"Sử dụng lệnh theo cấu trúc:\n\tcommand [--options] [parametere=\"value\"]\nhoặc\n\tcommand [parameter=\"value\"] [--options]");
+            ViewHelp.WriteLine($"\nCác lệnh cơ bản (command)");
             foreach (var item in _help)
             {
                 ViewHelp.WriteLine($"\t{item.Key,-20}{item.Value}\n");
             }
-            ViewHelp.WriteLine($"Sử dụng lệnh theo cấu trúc:\n\tcommand [--options] [parametere=\"value\"]\nhoặc\n\tcommand [parameter=\"value\"] [--options]");
             ViewHelp.WriteLine($"\nĐể biết chi  tiết về các [--options] và [parameter] của các lệnh, vui lòng sử dụng\n\tcommand --help\nhoặc\n\tcommand -h\nhoặc\n\tcommand /?");
         }
 

@@ -35,19 +35,19 @@ namespace BookMan.ConsoleApp.Framework
             switch (Model.Type)
             {
                 case MessageType.ERROR:
-                    ViewHelp.WriteLine(Model.Label.ToUpper() ?? "LỖI", System.ConsoleColor.DarkRed);
+                    ViewHelp.Write(Model.Label.ToUpper() ?? "LỖI", System.ConsoleColor.DarkRed);
                     break;
                 case MessageType.SUCCECSS:
-                    ViewHelp.WriteLine(Model.Label.ToUpper() ?? "THÀNH CÔNG", System.ConsoleColor.DarkGreen);
+                    ViewHelp.Write(Model.Label.ToUpper() ?? "THÀNH CÔNG", System.ConsoleColor.DarkGreen);
                     break;
                 case MessageType.INFORMATION:
-                    ViewHelp.WriteLine(Model.Label.ToUpper() ?? "THÔNG TIN", System.ConsoleColor.DarkYellow);
+                    ViewHelp.Write(Model.Label.ToUpper() ?? "THÔNG TIN", System.ConsoleColor.DarkYellow);
                     break;
                 case MessageType.CONFIRMATION:
-                    ViewHelp.WriteLine(Model.Label.ToUpper() ?? "XÁC NHẬN", System.ConsoleColor.DarkMagenta);
+                    ViewHelp.Write(Model.Label.ToUpper() ?? "XÁC NHẬN", System.ConsoleColor.DarkMagenta);
                     break;
             }
-            ViewHelp.WriteLine(Model.Description, Model.Type == MessageType.CONFIRMATION ? System.ConsoleColor.DarkCyan : System.ConsoleColor.White);
+            ViewHelp.WriteLine(": " + Model.Description, Model.Type == MessageType.CONFIRMATION ? System.ConsoleColor.DarkCyan : System.ConsoleColor.White);
             if (Model.Type == MessageType.CONFIRMATION)
             {
                 ViewHelp.Write("[Gõ 'y' hoặc 'yes' để nhận, nhập bất kì để hủy] >>>: ");

@@ -24,6 +24,22 @@ namespace BookMan.ConsoleApp.Views
             var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", ConsoleColor.DarkRed);
             var reading = ViewHelp.InputBool("Đánh dấu sách đang đọc: ", ConsoleColor.DarkRed);
             var filePath = ViewHelp.InputString("Đường dẫn file sách: ", ConsoleColor.DarkRed);
+
+            /// Tạo command
+            var request = $"do-create --book " +
+                $"name=\"{name}\" " +
+                $"authors=\"{authors}\" " +
+                $"publisher=\"{publisher}\" " +
+                $"edition=\"{edition}\" " +
+                $"isbn=\"{isbn}\" " +
+                $"year=\"{year}\" " +
+                $"shortDescription=\"{shortDescription}\" " +
+                $"rate=\"{rate}\" " +
+                $"reading=\"{reading}\" " +
+                $"filePath=\"{filePath}\" ";
+
+            /// Thực thi command
+            Router.Forward(request);
         }
 
         public static new void Help()
