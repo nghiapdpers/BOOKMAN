@@ -66,7 +66,7 @@ namespace BookMan.ConsoleApp
             r.Register(new string[]
             {
                 "help", "/?"
-            }, (o, p) => controllers.Help("help"));
+            }, (o, p) => controllers.Help());
 
             r.Register("create", (o, p) => controllers.Create());
 

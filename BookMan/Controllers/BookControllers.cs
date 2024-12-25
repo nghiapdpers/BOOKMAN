@@ -1,12 +1,13 @@
 ﻿namespace BookMan.ConsoleApp.Controllers
 {
     using BookMan.ConsoleApp.DataServices;
+    using BookMan.ConsoleApp.Framework;
     using Models;
     using Views;
     /// <summary>
     /// Controllers sách
     /// </summary>
-    internal class BookControllers
+    internal class BookControllers : ControllerBase
     {
         /// <summary>
         /// Liên kết công cụ lưu trữ dữ liệu
@@ -25,8 +26,7 @@
         public void Single(int id)
         {
             Book book = Repository.Get(id);
-            BookSingleView view = new(book);
-            view.Render();
+            Render(new BookSingleView(book), true, "single");
         }
 
         /// <summary>
@@ -34,8 +34,7 @@
         /// </summary>
         public void Create()
         {
-            BookCreateView view = new();
-            view.Render();
+            Render(new BookCreateView());
         }
 
         /// <summary>
@@ -45,8 +44,7 @@
         public void Update(int id)
         {
             Book book = Repository.Get(id);
-            BookUpdateView view = new(book);
-            view.Render();
+            Render(new BookUpdateView(book));
         }
 
         /// <summary>
@@ -55,17 +53,15 @@
         /// <param name="keyword"></param>
         public void List(string keyword = "")
         {
-            BookListView view = new(Repository.GetAll());
-            view.Render();
+            Render(new BookListView(Repository.GetAll()));
         }
 
         /// <summary>
         /// Hiển thị thông tin hỗ trợ.
         /// </summary>
-        public void Help(string Route)
+        public override void Help()
         {
-            BookHelpView view = new();
-            view.Render();
+            Render(new BookHelpView());
         }
     }
 }
