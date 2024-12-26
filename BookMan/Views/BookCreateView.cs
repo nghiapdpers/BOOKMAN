@@ -33,10 +33,10 @@ namespace BookMan.ConsoleApp.Views
                 $"edition=\"{edition}\" " +
                 $"isbn=\"{isbn}\" " +
                 $"year=\"{year}\" " +
-                $"shortDescription=\"{shortDescription}\" " +
+                $"description=\"{shortDescription}\" " +
                 $"rate=\"{rate}\" " +
                 $"reading=\"{reading}\" " +
-                $"filePath=\"{filePath}\" ";
+                $"file-path=\"{filePath}\" ";
 
             /// Thực thi command
             Router.Forward(request);

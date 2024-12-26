@@ -63,5 +63,19 @@ namespace BookMan.ConsoleApp.Framework
                 return false;
             }
         }
+
+        public static int ToInt(this string value)
+        {
+            if (!int.TryParse(value, out int result))
+                throw new System.Exception("Không thể chuyển đổi chuỗi thành số nguyên!");
+            return result;
+        }
+
+        public static sbyte ToSbyte(this string value)
+        {
+            if (!sbyte.TryParse(value, out sbyte result))
+                throw new System.Exception("Không thể chuyển đổi chuỗi thành số tự nhiên!");
+            return result;
+        }
     }
 }

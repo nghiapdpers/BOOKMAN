@@ -27,6 +27,20 @@ namespace BookMan.ConsoleApp.Views
             var shortDescription = ViewHelp.InputString("Mô tả sách: ", Model.ShortDescription, ConsoleColor.DarkRed);
             var rate = ViewHelp.InputInt("Đánh giá cá nhân: ", Model.Rate, ConsoleColor.DarkRed);
             var filePath = ViewHelp.InputString("Đường dẫn file sách: ", Model.File, ConsoleColor.DarkRed);
+
+            var request = $"do-update --book " +
+                $"id={Model.Id}" +
+                $"name={name}" +
+                $"authors={authors}" +
+                $"publisher={publisher}" +
+                $"year={year}" +
+                $"edition={edition}" +
+                $"isbn={isbn}" +
+                $"description={shortDescription}" +
+                $"rate={rate}" +
+                $"file-path={filePath}";
+
+            Router.Forward(request);
         }
     }
 }
