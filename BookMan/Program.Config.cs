@@ -78,7 +78,7 @@ namespace BookMan.ConsoleApp
                 "do-create",
                 (r) =>
                 {
-                    if (r.InValid()) throw notValidAction;
+                    if (!r.IsValid()) throw notValidAction;
                     controllers.Create(r.ToBook());
                 });
 
@@ -86,7 +86,7 @@ namespace BookMan.ConsoleApp
                 "view",
                 (r) =>
                 {
-                    if (r.InValid()) throw notValidAction;
+                    if (!r.IsValid()) throw notValidAction;
                     if (r.ListOptions.Contains("--single"))
                         controllers.Single(r.Parameters["id"].ToInt());
                     else if (r.ListOptions.Contains("--list"))
@@ -97,7 +97,7 @@ namespace BookMan.ConsoleApp
                 "update",
                 (r) =>
                 {
-                    if (r.InValid()) throw notValidAction;
+                    if (!r.IsValid()) throw notValidAction;
                     controllers.Update(r.Parameters["id"].ToInt());
                 });
 
@@ -105,7 +105,7 @@ namespace BookMan.ConsoleApp
                "do-update",
                (r) =>
                {
-                   if (r.InValid()) throw notValidAction;
+                   if (!r.IsValid()) throw notValidAction;
                    controllers.Update(r.Parameters["id"].ToInt());
                });
 
