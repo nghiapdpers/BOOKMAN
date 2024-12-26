@@ -47,5 +47,10 @@ namespace BookMan.ConsoleApp.Framework
                 }
             }
         }
+
+        public bool IsEmpty()
+        {
+            return _parameters.Count == 0;
+        }
     }
 }

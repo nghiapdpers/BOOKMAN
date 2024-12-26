@@ -17,7 +17,7 @@ namespace BookMan.ConsoleApp
             PrepareRouter(controllers);
             while (true)
             {
-                //try
+                try
                 {
 
                     ViewHelp.Write("# BookManCLI >>> ", ConsoleColor.DarkGreen);
@@ -25,16 +25,11 @@ namespace BookMan.ConsoleApp
 
                     Router.Instance.Forward(input);
                 }
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex.Message);
-                //}
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message, ex.StackTrace);
+                }
             }
-        }
-
-        public static void About()
-        {
-            ViewHelp.WriteLine("Small BookShelf App\nProgrammed by Pham Duy Nghia 2024", ConsoleColor.Green);
         }
     }
 }

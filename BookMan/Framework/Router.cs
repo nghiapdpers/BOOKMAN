@@ -7,7 +7,7 @@ namespace BookMan.ConsoleApp.Framework
     /// Khai báo các kiểu dữ liệu sử dụng
     using HelperMap = Dictionary<string, HelpAction>;
     using RouterMap = Dictionary<string, ControllerAction>;
-    public delegate void ControllerAction(List<string> options, Parameter parameter);
+    public delegate void ControllerAction(Router.Request request);
     public delegate void HelpAction();
     /// <summary>
     /// Class Router ánh xạ các lệnh của chương trình
@@ -82,7 +82,7 @@ namespace BookMan.ConsoleApp.Framework
             var req = new Request(command);
             if (!_routerMap.ContainsKey(req.Route))
             {
-                throw new Exception("Không có lệnh này, vui lòng thử lại.\nSử dụng -h hoặc --help để biết thêm chi tiết.");
+                throw new Exception("Không có lệnh này, vui lòng thử lại.\nSử dụng help hoặc /? để biết thêm chi tiết.");
             }
 
             var validHelp = req.ListOptions.Contains("--help")
@@ -93,11 +93,11 @@ namespace BookMan.ConsoleApp.Framework
                 if (_helperMap.ContainsKey(req.Route))
                     _helperMap[req.Route]?.Invoke();
                 else
-                    throw new Exception("Không có hướng dẫn cho lệnh này, vui lòng thử lại.\nSử dụng -h hoặc --help để biết thêm chi tiết.");
+                    throw new Exception("Không có hướng dẫn cho lệnh này, vui lòng thử lại.\nSử dụng help hoặc /? để biết thêm chi tiết.");
                 return;
             }
 
-            _routerMap[req.Route]?.Invoke(req.ListOptions, req.Parameters);
+            _routerMap[req.Route]?.Invoke(req);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace BookMan.ConsoleApp.Framework
         /// anatony: Route      Option      Parameter
         /// </code>
         /// </summary>
-        internal class Request
+        public class Request
         {
             /// <summary>
             /// Lệnh cần xử lý
@@ -137,13 +137,14 @@ namespace BookMan.ConsoleApp.Framework
                 var regParameter = @"\w+\=\"".*?\""";
                 var strParameter = request;
                 var lRequest = request.Split(" ");
-                bool invalidRoute = lRequest[0].StartsWith("-")
+                bool invalidRoute = string.IsNullOrEmpty(request)
+                    || lRequest[0].StartsWith("-")
                     || lRequest[0].StartsWith("--")
                     || lRequest[0].Contains("=");
 
                 if (invalidRoute)
                 {
-                    throw new Exception("Lệnh không hợp lệ, vui lòng thử lại.\nSử dụng -h hoặc --help để biết thêm chi tiết.");
+                    throw new Exception("Lệnh không hợp lệ, vui lòng thử lại.\nSử dụng help hoặc /? để biết thêm chi tiết.");
                 }
                 // Route luôn là lệnh đầu tiên
                 Route = lRequest[0];
@@ -164,6 +165,10 @@ namespace BookMan.ConsoleApp.Framework
                             {
                                 ListOptions.Add(data);
                                 strParameter = strParameter.Replace(data, "");
+                            }
+                            else
+                            {
+                                throw new Exception($"Tùy chọn {data} không tồn tại, vui lòng sử dụng [{Route} --help] để biết thêm hướng dẫn về lệnh này.");
                             }
                         }
                     }

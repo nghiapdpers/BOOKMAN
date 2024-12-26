@@ -61,4 +61,9 @@ internal static class ExtensionHelpers
 
         return book;
     }
+
+    public static bool InValid(this Request request)
+    {
+        return request.ListOptions.Count == 0 || request.Parameters.IsEmpty();
+    }
 }

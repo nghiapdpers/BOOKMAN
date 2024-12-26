@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace BookMan.ConsoleApp.Framework
 {
     /// <summary>
     /// Class cha cho các controller
     /// </summary>
-    public abstract class ControllerBase
+    public class ControllerBase
     {
-        protected abstract Dictionary<string, string> _help { get; }
         /// <summary>
         /// Render ra một view
         /// </summary>
@@ -40,20 +38,6 @@ namespace BookMan.ConsoleApp.Framework
 
                 view.SaveToPath(fileName, folder);
             }
-        }
-
-        /// <summary>
-        /// Hỗ trợ về các lệnh của controller đã đăng ký với router
-        /// </summary>
-        public virtual void Help()
-        {
-            ViewHelp.WriteLine($"Sử dụng lệnh theo cấu trúc:\n\tcommand [--options] [parametere=\"value\"]\nhoặc\n\tcommand [parameter=\"value\"] [--options]");
-            ViewHelp.WriteLine($"\nCác lệnh cơ bản (command)");
-            foreach (var item in _help)
-            {
-                ViewHelp.WriteLine($"\t{item.Key,-20}{item.Value}\n");
-            }
-            ViewHelp.WriteLine($"\nĐể biết chi  tiết về các [--options] và [parameter] của các lệnh, vui lòng sử dụng\n\tcommand --help\nhoặc\n\tcommand -h\nhoặc\n\tcommand /?");
         }
 
         /// <summary>
