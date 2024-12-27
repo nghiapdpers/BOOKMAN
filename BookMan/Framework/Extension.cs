@@ -27,7 +27,7 @@ namespace BookMan.ConsoleApp.Framework
             },
         };
 
-        private static readonly DStringBoolean dStringToTrue = new()
+        private static readonly DStringBoolean dStringTrue = new()
         {
             {"y", true },
             {"true", true },
@@ -54,7 +54,7 @@ namespace BookMan.ConsoleApp.Framework
         /// <returns></returns>
         public static bool ToBool(this string value)
         {
-            if (dStringToTrue[value] == true)
+            if (dStringTrue.ContainsKey(value))
             {
                 return true;
             }

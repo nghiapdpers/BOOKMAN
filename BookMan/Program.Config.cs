@@ -1,5 +1,6 @@
 ﻿using BookMan.ConsoleApp.Controllers;
 using BookMan.ConsoleApp.Framework;
+using BookMan.ConsoleApp.Views;
 using System;
 using System.Collections.Generic;
 
@@ -13,6 +14,7 @@ namespace BookMan.ConsoleApp
                 {"view", "xem thông tin một/danh sách cuốn sách" },
                 {"create", "tạo ra một cuốn sách và lưu trữ" },
                 {"update", "cập nhật thông tin một cuốn sách" },
+                {"delete", "xóa một cuốn sách" },
                 {"q/quit/exit", "thoát chương trình" },
                 {"clear/cls", "xóa màn hình" },
             };
@@ -26,27 +28,44 @@ namespace BookMan.ConsoleApp
         public static void PrepareOptions()
         {
             Options.AddListOptions("help");
+
             Options.AddListOptions("create", new string[]
             {
-                "--book", "--shelf", "-b", "-sh", "-d", "--default"
+                "--book", "--shelf", "-b", "-sh", "-d", "--default", "--help", "-h"
             });
+
             Options.AddListOptions("do-create", new string[]
             {
                 "--book", "--shelf", "-b", "-sh", "-d", "--default"
             });
+
             Options.AddListOptions("view", new string[]
             {
                 "--single", "--list"
             });
+
+            Options.AddListOptions("delete", new string[]
+            {
+                "--skip", "-s"
+            });
+
             Options.AddListOptions("update");
-            Options.AddListOptions("do-update", new string[]
+
+            Options.AddListOptions("do-update", value: new string[]
             {
                 "--book", "--shelf", "-b", "-sh", "-d", "--default"
             });
+
+            Options.AddListOptions("filter", new string[]
+            {
+                "--book", "--shelf", "-b", "-sh"
+            });
+
             Options.AddListOptions(new string[]
             {
                 "exit", "q", "quit"
             });
+
             Options.AddListOptions(new string[]
             {
                 "cls", "clear"
@@ -72,7 +91,9 @@ namespace BookMan.ConsoleApp
                 {
                     //if (r.InValid()) throw notValidAction;
                     controllers.Create();
-                });
+                },
+                () => BookCreateView.Help()
+                );
 
             Router.Register(
                 "do-create",
@@ -108,6 +129,34 @@ namespace BookMan.ConsoleApp
                    if (!r.IsValid()) throw notValidAction;
                    controllers.Update(r.Parameters["id"].ToInt());
                });
+
+            Router.Register(
+                "delete",
+                (r) =>
+                {
+                    if (!r.IsValid()) throw notValidAction;
+                    if (r.ContainOptions(new string[] { "--skip", "-s" }))
+                    {
+                        Router.Forward($"do-delete id=\"{r.Parameters["id"]}\"");
+                    }
+                    controllers.Delete(r.Parameters["id"].ToInt());
+                });
+
+            Router.Register(
+                "do-delete",
+                (r) =>
+                {
+                    if (!r.IsValid()) throw notValidAction;
+                    controllers.Delete(r.Parameters["id"].ToInt(), false);
+                });
+
+            Router.Register(
+                "filter",
+                (r) =>
+                {
+                    if (!r.IsValid()) throw notValidAction;
+                    controllers.Filter(r.Parameters["keyword"]);
+                });
 
             Router.Register(new string[]
             {

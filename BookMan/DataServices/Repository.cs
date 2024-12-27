@@ -51,11 +51,11 @@ namespace BookMan.ConsoleApp.DataServices
 
             foreach (Book book in _context.Books)
             {
-                bool logic = book.Name.Contains(keyword)
-                    || book.Publisher.Contains(keyword)
-                    || book.ShortDescription.Contains(keyword)
-                    || book.Tags.Contains(keyword)
-                    || book.Authors.Contains(keyword);
+                bool logic = book.Name.ToLower().Contains(keyword.ToLower())
+                    || book.Publisher.ToLower().Contains(keyword.ToLower())
+                    || book.ShortDescription.ToLower().Contains(keyword.ToLower())
+                    || book.Tags.ToLower().Contains(keyword.ToLower())
+                    || book.Authors.ToLower().Contains(keyword.ToLower());
                 if (logic)
                 {
                     temp.Add(book);

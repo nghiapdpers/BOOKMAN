@@ -184,6 +184,24 @@ namespace BookMan.ConsoleApp.Framework
 
                 }
             }
+
+            /// <summary>
+            /// Kiểm tra xem Request có chứa bất kì một trong các option của tham số truyền vào hay không
+            /// </summary>
+            /// <param name="options">Danh sách tham số kiểm tra</param>
+            /// <returns></returns>
+            public bool ContainOptions(string[] options)
+            {
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (ListOptions.Contains(options[i]))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
     }
 }

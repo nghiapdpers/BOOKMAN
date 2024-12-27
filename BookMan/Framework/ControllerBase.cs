@@ -79,7 +79,7 @@ namespace BookMan.ConsoleApp.Framework
         /// <param name="confirmCommand"></param>
         public virtual void Confirmation(string text, string confirmCommand) => Render(new MessageView(new Message
         {
-            Type = MessageType.SUCCECSS,
+            Type = MessageType.CONFIRMATION,
             Description = text,
             BackRoute = confirmCommand,
         }));
