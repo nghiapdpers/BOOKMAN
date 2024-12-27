@@ -12,9 +12,11 @@ namespace BookMan.ConsoleApp
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
-            BookControllers controllers = new(new SimpleDataAcess());
+            SimpleDataAcess context = new SimpleDataAcess();
+            BookControllers controllers = new(context);
+            ShellControllers shellController = new(context);
             PrepareOptions();
-            PrepareRouter(controllers);
+            PrepareRouter(controllers, shellController);
             while (true)
             {
                 try
@@ -27,7 +29,14 @@ namespace BookMan.ConsoleApp
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message, ex.StackTrace);
+                    //Console.WriteLine(ex.Message, ex.StackTrace);
+                    var view = new MessageView(new Message
+                    {
+                        Description = ex.Message,
+                        Type = MessageType.ERROR
+                    });
+
+                    view.Render();
                 }
             }
         }

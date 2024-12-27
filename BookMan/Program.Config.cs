@@ -61,6 +61,8 @@ namespace BookMan.ConsoleApp
                 "--book", "--shelf", "-b", "-sh"
             });
 
+            Options.AddListOptions("shell");
+
             Options.AddListOptions(new string[]
             {
                 "exit", "q", "quit"
@@ -75,8 +77,9 @@ namespace BookMan.ConsoleApp
         /// <summary>
         /// Chuẩn bị dữ liệu cho router
         /// </summary>
-        /// <param name="controllers"></param>
-        public static void PrepareRouter(BookControllers controllers)
+        /// <param name="bookControllers"></param>
+        /// <param name="shellControllers"></param>
+        public static void PrepareRouter(BookControllers bookControllers, ShellControllers shellControllers)
         {
             Router Router = Router.Instance;
             Router.Register(new string[]
@@ -90,7 +93,7 @@ namespace BookMan.ConsoleApp
                 (r) =>
                 {
                     //if (r.InValid()) throw notValidAction;
-                    controllers.Create();
+                    bookControllers.Create();
                 },
                 () => BookCreateView.Help()
                 );
@@ -100,7 +103,7 @@ namespace BookMan.ConsoleApp
                 (r) =>
                 {
                     if (!r.IsValid()) throw notValidAction;
-                    controllers.Create(r.ToBook());
+                    bookControllers.Create(r.ToBook());
                 });
 
             Router.Register(
@@ -109,9 +112,9 @@ namespace BookMan.ConsoleApp
                 {
                     if (!r.IsValid()) throw notValidAction;
                     if (r.ListOptions.Contains("--single"))
-                        controllers.Single(r.Parameters["id"].ToInt());
+                        bookControllers.Single(r.Parameters["id"].ToInt());
                     else if (r.ListOptions.Contains("--list"))
-                        controllers.List();
+                        bookControllers.List();
                 });
 
             Router.Register(
@@ -119,7 +122,7 @@ namespace BookMan.ConsoleApp
                 (r) =>
                 {
                     if (!r.IsValid()) throw notValidAction;
-                    controllers.Update(r.Parameters["id"].ToInt());
+                    bookControllers.Update(r.Parameters["id"].ToInt());
                 });
 
             Router.Register(
@@ -127,7 +130,7 @@ namespace BookMan.ConsoleApp
                (r) =>
                {
                    if (!r.IsValid()) throw notValidAction;
-                   controllers.Update(r.Parameters["id"].ToInt());
+                   bookControllers.Update(r.Parameters["id"].ToInt());
                });
 
             Router.Register(
@@ -139,7 +142,7 @@ namespace BookMan.ConsoleApp
                     {
                         Router.Forward($"do-delete id=\"{r.Parameters["id"]}\"");
                     }
-                    controllers.Delete(r.Parameters["id"].ToInt());
+                    bookControllers.Delete(r.Parameters["id"].ToInt());
                 });
 
             Router.Register(
@@ -147,7 +150,7 @@ namespace BookMan.ConsoleApp
                 (r) =>
                 {
                     if (!r.IsValid()) throw notValidAction;
-                    controllers.Delete(r.Parameters["id"].ToInt(), false);
+                    bookControllers.Delete(r.Parameters["id"].ToInt(), false);
                 });
 
             Router.Register(
@@ -155,8 +158,16 @@ namespace BookMan.ConsoleApp
                 (r) =>
                 {
                     if (!r.IsValid()) throw notValidAction;
-                    controllers.Filter(r.Parameters["keyword"]);
+                    bookControllers.Filter(r.Parameters["keyword"]);
                 });
+
+            Router.Register(
+             "shell",
+             (r) =>
+             {
+                 if (!r.IsValid()) throw notValidAction;
+                 shellControllers.Shell(r.Parameters?["folder"], r.Parameters?["ext"]);
+             });
 
             Router.Register(new string[]
             {

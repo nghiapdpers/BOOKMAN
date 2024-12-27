@@ -9,14 +9,8 @@
     /// </summary>
     internal class BookControllers : ControllerBase
     {
-        /// <summary>
-        /// Liên kết công cụ lưu trữ dữ liệu
-        /// </summary>
-        protected Repository Repository;
-
-        public BookControllers(SimpleDataAcess context)
+        public BookControllers(SimpleDataAcess context) : base(context)
         {
-            Repository = new(context);
         }
 
         /// <summary>

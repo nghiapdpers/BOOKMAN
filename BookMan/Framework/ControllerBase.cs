@@ -1,12 +1,23 @@
-﻿using System;
+﻿using BookMan.ConsoleApp.DataServices;
+using System;
 
 namespace BookMan.ConsoleApp.Framework
 {
     /// <summary>
     /// Class cha cho các controller
     /// </summary>
-    public class ControllerBase
+    internal class ControllerBase
     {
+        /// <summary>
+        /// Liên kết công cụ lưu trữ dữ liệu
+        /// </summary>
+        protected Repository Repository;
+
+        public ControllerBase(SimpleDataAcess context)
+        {
+            Repository = new(context);
+        }
+
         /// <summary>
         /// Render ra một view
         /// </summary>
