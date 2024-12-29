@@ -1,4 +1,5 @@
 ﻿using BookMan.ConsoleApp.Models;
+using System;
 using System.Collections.Generic;
 
 namespace BookMan.ConsoleApp.DataServices
@@ -122,6 +123,34 @@ namespace BookMan.ConsoleApp.DataServices
             b.TotalMinutesRead = book.TotalMinutesRead;
             b.Rate = book.Rate;
             return true;
+        }
+
+        /// <summary>
+        /// Lấy danh sách các cuốn sách theo điều kiện
+        /// </summary>
+        /// <param name="predicate">Hàm điều kiện trả về bool</param>
+        /// <returns></returns>
+        public Book[] Get(Predicate<Book> predicate)
+        {
+            List<Book> books = new List<Book>();
+
+            foreach (Book book in GetAll())
+            {
+                if (predicate(book))
+                {
+                    books.Add(book);
+                }
+            }
+
+            return books.ToArray();
+        }
+
+        /// <summary>
+        /// Xóa dữ liệu sách
+        /// </summary>
+        public void ClearBook()
+        {
+            _context.Books.Clear();
         }
     }
 }

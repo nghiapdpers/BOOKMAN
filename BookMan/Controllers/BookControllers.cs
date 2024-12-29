@@ -104,5 +104,68 @@
                 Render(new BookListView(model));
             }
         }
+
+        /// <summary>
+        /// Đọc sách
+        /// </summary>
+        /// <param name="id"></param>
+        public void Read(int id)
+        {
+            var model = Repository.Get(id);
+            if (model.IsNull())
+            {
+                Information($"Không tìm thấy thông tin cuốn sách!");
+            }
+            else
+            {
+                model.Reading = true;
+                Repository.Update(model);
+                Success($"Đang đọc sách \"{model.Name}\"");
+            }
+        }
+
+        /// <summary>
+        /// Đánh dấu/Hủy đánh dấu sách đang đọc
+        /// </summary>
+        /// <param name="id"></param>
+        public void Mark(int id, bool read = true)
+        {
+            var model = Repository.Get(id);
+            if (model.IsNull())
+            {
+                Information($"Không tìm thấy thông tin cuốn sách!");
+            }
+            else
+            {
+                model.Reading = read;
+                Repository.Update(model);
+                Success($"Đã {(read ? "" : "hủy ")}đánh dấu sách \"{model.Name}\"");
+            }
+        }
+
+        /// <summary>
+        /// Hiển thị các cuốn sách đang đánh dấu
+        /// </summary>
+        public void ShowMarks()
+        {
+            var model = Repository.Get((b) => b.Reading);
+            if (model.Length == 0)
+            {
+                Information($"Không có cuốn sách nào được đánh dấu!");
+            }
+            else
+            {
+                Render(new BookListView(model));
+            }
+        }
+
+        /// <summary>
+        /// Xóa dữ liệu sách
+        /// </summary>
+        public void Wipe()
+        {
+            Repository.ClearBook();
+            Success($"Đã xóa toàn bộ dữ liệu sách!");
+        }
     }
 }

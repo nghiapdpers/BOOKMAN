@@ -41,7 +41,7 @@ namespace BookMan.ConsoleApp
 
             Options.AddListOptions("view", new string[]
             {
-                "--single", "--list"
+                "--single", "--list", "-s", "-l"
             });
 
             Options.AddListOptions("delete", new string[]
@@ -62,6 +62,22 @@ namespace BookMan.ConsoleApp
             });
 
             Options.AddListOptions("shell");
+
+            Options.AddListOptions("mark", new string[]
+           {
+                "--list", "-l"
+           });
+
+            Options.AddListOptions("unmark");
+
+            Options.AddListOptions(new string[]
+            {
+                "wipe", "wd", "clean", "cld"
+            },
+            new string[]
+            {
+                "--all", "-a", "--book", "-b", "--shelf", "-sh"
+            });
 
             Options.AddListOptions(new string[]
             {
@@ -89,85 +105,132 @@ namespace BookMan.ConsoleApp
             (r) => Help());
 
             Router.Register(
-                "create",
-                (r) =>
+            "create",
+            (r) =>
+            {
+                //if (r.InValid()) throw notValidAction;
+                bookControllers.Create();
+            },
+            () => BookCreateView.Help()
+            );
+
+            Router.Register(
+            "do-create",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Create(r.ToBook());
+            });
+
+            Router.Register(
+            "view",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                if (r.ContainOptions(new string[] { "--single", "-s" }))
+                    bookControllers.Single(r.Parameters["id"].ToInt());
+                else if (r.ContainOptions(new string[] { "--list", "-l" }))
+                    bookControllers.List();
+            });
+
+            Router.Register(
+            "update",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Update(r.Parameters["id"].ToInt());
+            });
+
+            Router.Register(
+            "do-update",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Update(r.Parameters["id"].ToInt());
+            });
+
+            Router.Register(
+            "delete",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                if (r.ContainOptions(new string[] { "--skip", "-s" }))
                 {
-                    //if (r.InValid()) throw notValidAction;
-                    bookControllers.Create();
-                },
-                () => BookCreateView.Help()
-                );
+                    Router.Forward($"do-delete id=\"{r.Parameters["id"]}\"");
+                    return;
+                }
+                bookControllers.Delete(r.Parameters["id"].ToInt());
+            });
 
             Router.Register(
-                "do-create",
-                (r) =>
+            "do-delete",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Delete(r.Parameters["id"].ToInt(), false);
+            });
+
+            Router.Register(
+            "filter",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Filter(r.Parameters["keyword"]);
+            });
+
+            Router.Register(
+            "shell",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                shellControllers.Shell(r.Parameters?["folder"], r.Parameters?["ext"]);
+            });
+
+            Router.Register(
+            "read",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Read(r.Parameters["id"].ToInt());
+            });
+
+            Router.Register(
+            "mark",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                if (r.ContainOptions(new string[] { "--list", "-l" }))
                 {
-                    if (!r.IsValid()) throw notValidAction;
-                    bookControllers.Create(r.ToBook());
-                });
+                    bookControllers.ShowMarks();
+                    return;
+                }
+                bookControllers.Mark(r.Parameters["id"].ToInt());
+            });
 
             Router.Register(
-                "view",
-                (r) =>
+            "unmark",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+                bookControllers.Mark(r.Parameters["id"].ToInt(), false);
+            });
+
+            Router.Register(
+            new string[]
+            {
+                "wipe", "wd", "clean", "cld"
+            },
+            (r) =>
+            {
+                if (r.ContainOptions(new string[] { "--book", "-b" }))
                 {
-                    if (!r.IsValid()) throw notValidAction;
-                    if (r.ListOptions.Contains("--single"))
-                        bookControllers.Single(r.Parameters["id"].ToInt());
-                    else if (r.ListOptions.Contains("--list"))
-                        bookControllers.List();
-                });
-
-            Router.Register(
-                "update",
-                (r) =>
+                    bookControllers.Wipe();
+                }
+                else
                 {
-                    if (!r.IsValid()) throw notValidAction;
-                    bookControllers.Update(r.Parameters["id"].ToInt());
-                });
-
-            Router.Register(
-               "do-update",
-               (r) =>
-               {
-                   if (!r.IsValid()) throw notValidAction;
-                   bookControllers.Update(r.Parameters["id"].ToInt());
-               });
-
-            Router.Register(
-                "delete",
-                (r) =>
-                {
-                    if (!r.IsValid()) throw notValidAction;
-                    if (r.ContainOptions(new string[] { "--skip", "-s" }))
-                    {
-                        Router.Forward($"do-delete id=\"{r.Parameters["id"]}\"");
-                    }
-                    bookControllers.Delete(r.Parameters["id"].ToInt());
-                });
-
-            Router.Register(
-                "do-delete",
-                (r) =>
-                {
-                    if (!r.IsValid()) throw notValidAction;
-                    bookControllers.Delete(r.Parameters["id"].ToInt(), false);
-                });
-
-            Router.Register(
-                "filter",
-                (r) =>
-                {
-                    if (!r.IsValid()) throw notValidAction;
-                    bookControllers.Filter(r.Parameters["keyword"]);
-                });
-
-            Router.Register(
-             "shell",
-             (r) =>
-             {
-                 if (!r.IsValid()) throw notValidAction;
-                 shellControllers.Shell(r.Parameters?["folder"], r.Parameters?["ext"]);
-             });
+                    bookControllers.Wipe();
+                }
+            });
 
             Router.Register(new string[]
             {

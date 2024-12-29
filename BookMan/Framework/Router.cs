@@ -202,6 +202,16 @@ namespace BookMan.ConsoleApp.Framework
 
                 return false;
             }
+
+            /// <summary>
+            /// Kiểm tra xem Request có option của tham số truyền vào hay không
+            /// </summary>
+            /// <param name="option">Tham số kiểm tra</param>
+            /// <returns></returns>
+            public bool ContainOptions(string option)
+            {
+                return ListOptions.Contains(option);
+            }
         }
     }
 }
