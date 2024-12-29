@@ -12,9 +12,9 @@ namespace BookMan.ConsoleApp.DataServices
         /// <summary>
         /// Liên kết với lớp lưu trữ dữ liệu
         /// </summary>
-        private readonly JsonDataAccess _context;
+        private readonly IDataAccess _context;
 
-        public Repository(JsonDataAccess context)
+        public Repository(IDataAccess context)
         {
             _context = context;
             _context.Load();

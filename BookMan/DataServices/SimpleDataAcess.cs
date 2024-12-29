@@ -6,9 +6,9 @@ namespace BookMan.ConsoleApp.DataServices
     /// <summary>
     /// Lớp lưu trữ dữ liệu cơ bản
     /// </summary>
-    internal class SimpleDataAcess
+    internal class SimpleDataAcess : IDataAccess
     {
-        public List<Book> Books;
+        public List<Book> Books { set; get; }
 
         /// <summary>
         /// Load dữ liệu

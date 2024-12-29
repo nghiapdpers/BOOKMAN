@@ -9,9 +9,9 @@ namespace BookMan.ConsoleApp.DataServices
     /// <summary>
     /// Class đọc/lưu trữ dữ liệu xml
     /// </summary>
-    internal class XmlDataAccess
+    internal class XmlDataAccess : IDataAccess
     {
-        public List<Book> Books = new List<Book>();
+        public List<Book> Books { set; get; } = new List<Book>();
         private readonly string _file = "data.xml";
 
         /// <summary>

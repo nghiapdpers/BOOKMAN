@@ -6,7 +6,7 @@ namespace BookMan.ConsoleApp.Controllers
 {
     internal class ShellControllers : ControllerBase
     {
-        public ShellControllers(JsonDataAccess context) : base(context) { }
+        public ShellControllers(IDataAccess context) : base(context) { }
 
         public void Shell(string folder, string ext = "txt")
         {

@@ -8,9 +8,9 @@ namespace BookMan.ConsoleApp.DataServices
     /// <summary>
     /// Class lưu trữ/đọc dữ liệu dạng binary
     /// </summary>
-    internal class BinaryDataAccess
+    internal class BinaryDataAccess : IDataAccess
     {
-        public List<Book> Books = new List<Book>();
+        public List<Book> Books { get; set; } = new List<Book>();
         private readonly string _file = "data.dat";
 
         /// <summary>

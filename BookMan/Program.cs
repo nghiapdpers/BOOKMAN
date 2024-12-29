@@ -12,7 +12,7 @@ namespace BookMan.ConsoleApp
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
-            JsonDataAccess context = new JsonDataAccess();
+            IDataAccess context = new JsonDataAccess();
             BookControllers controllers = new(context);
             ShellControllers shellController = new(context);
             PrepareOptions();

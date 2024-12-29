@@ -8,9 +8,9 @@ namespace BookMan.ConsoleApp.DataServices
     /// <summary>
     /// Class lưu/đọc dữ liệu từ json
     /// </summary>
-    internal class JsonDataAccess
+    internal class JsonDataAccess : IDataAccess
     {
-        public List<Book> Books = new List<Book>();
+        public List<Book> Books { get; set; } = new List<Book>();
         private readonly string _file = "data.json";
 
         /// <summary>
