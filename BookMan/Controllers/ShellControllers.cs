@@ -6,7 +6,7 @@ namespace BookMan.ConsoleApp.Controllers
 {
     internal class ShellControllers : ControllerBase
     {
-        public ShellControllers(SimpleDataAcess context) : base(context) { }
+        public ShellControllers(JsonDataAccess context) : base(context) { }
 
         public void Shell(string folder, string ext = "txt")
         {
@@ -28,6 +28,12 @@ namespace BookMan.ConsoleApp.Controllers
                 Repository.Insert(new() { Name = Path.GetFileNameWithoutExtension(l) });
             }
             Success($"Đã thêm sách vào thư viện!");
+        }
+
+        public void Save()
+        {
+            Repository.SaveChanges();
+            Success("Lưu trữ dữ liệu thành công!");
         }
     }
 }

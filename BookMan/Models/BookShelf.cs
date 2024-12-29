@@ -6,7 +6,7 @@ namespace BookMan.ConsoleApp.Models
     /// <summary>
     /// Class dữ liệu kệ sách
     /// </summary>
-    internal class BookShelf
+    public class BookShelf
     {
         private int _id;
         /// <summary>

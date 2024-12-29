@@ -12,9 +12,9 @@ namespace BookMan.ConsoleApp.DataServices
         /// <summary>
         /// Liên kết với lớp lưu trữ dữ liệu
         /// </summary>
-        private readonly SimpleDataAcess _context;
+        private readonly JsonDataAccess _context;
 
-        public Repository(SimpleDataAcess context)
+        public Repository(JsonDataAccess context)
         {
             _context = context;
             _context.Load();
@@ -24,6 +24,10 @@ namespace BookMan.ConsoleApp.DataServices
         /// </summary>
         /// <returns></returns>
         public Book[] GetAll() => _context.Books.ToArray();
+        /// <summary>
+        /// Lưu tất cả sách vào dữ liệu
+        /// </summary>
+        public void SaveChanges() => _context.SaveChanges();
         /// <summary>
         /// Lấy sách theo id
         /// </summary>

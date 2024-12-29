@@ -61,7 +61,10 @@ namespace BookMan.ConsoleApp
                 "--book", "--shelf", "-b", "-sh"
             });
 
-            Options.AddListOptions("shell");
+            Options.AddListOptions("shell", new string[]
+            {
+                "--save", "-s"
+            });
 
             Options.AddListOptions("mark", new string[]
            {
@@ -183,7 +186,14 @@ namespace BookMan.ConsoleApp
             (r) =>
             {
                 if (!r.IsValid()) throw notValidAction;
-                shellControllers.Shell(r.Parameters?["folder"], r.Parameters?["ext"]);
+                if (r.ContainOptions(new string[] { "--save", "-s" }))
+                {
+                    shellControllers.Save();
+                }
+                else
+                {
+                    shellControllers.Shell(r.Parameters?["folder"], r.Parameters?["ext"]);
+                }
             });
 
             Router.Register(

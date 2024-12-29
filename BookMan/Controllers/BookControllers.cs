@@ -9,7 +9,7 @@
     /// </summary>
     internal class BookControllers : ControllerBase
     {
-        public BookControllers(SimpleDataAcess context) : base(context)
+        public BookControllers(JsonDataAccess context) : base(context)
         {
         }
 

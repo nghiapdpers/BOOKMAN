@@ -13,7 +13,7 @@ namespace BookMan.ConsoleApp.Framework
         /// </summary>
         protected Repository Repository;
 
-        public ControllerBase(SimpleDataAcess context)
+        public ControllerBase(JsonDataAccess context)
         {
             Repository = new(context);
         }

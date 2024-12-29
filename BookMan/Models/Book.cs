@@ -1,9 +1,12 @@
-﻿namespace BookMan.ConsoleApp.Models
+﻿using System;
+
+namespace BookMan.ConsoleApp.Models
 {
     /// <summary>
     /// Lớp sách điện tử
-    /// </summary>
-    internal class Book
+    /// </summary
+    [Serializable]
+    public class Book
     {
         private int _id = 1;
         /// <summary>
