@@ -24,7 +24,7 @@
             {
                 var book = Model[i];
 
-                ViewHelp.Write($"[{book.Id}] ");
+                ViewHelp.Write($"[{book.Id}] ", System.ConsoleColor.Magenta);
                 ViewHelp.WriteLine(book.Name, book.Reading ? System.ConsoleColor.DarkYellow : System.ConsoleColor.White);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using BookMan.ConsoleApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookMan.ConsoleApp.DataServices
 {
@@ -35,15 +36,7 @@ namespace BookMan.ConsoleApp.DataServices
         /// <returns></returns>
         public Book Get(int id)
         {
-            foreach (var b in _context.Books)
-            {
-                if (b.Id == id)
-                {
-                    return b;
-                }
-            }
-
-            return null;
+            return _context.Books.FirstOrDefault(b => b.Id == id);
         }
         /// <summary>
         /// Lấy sách theo keyword (tên, tác giả, nhà xuất bản, mô tả, thể loại).
@@ -52,22 +45,12 @@ namespace BookMan.ConsoleApp.DataServices
         /// <returns></returns>
         public Book[] Get(string keyword)
         {
-            List<Book> temp = new();
-
-            foreach (Book book in _context.Books)
-            {
-                bool logic = book.Name.ToLower().Contains(keyword.ToLower())
-                    || book.Publisher.ToLower().Contains(keyword.ToLower())
-                    || book.ShortDescription.ToLower().Contains(keyword.ToLower())
-                    || book.Tags.ToLower().Contains(keyword.ToLower())
-                    || book.Authors.ToLower().Contains(keyword.ToLower());
-                if (logic)
-                {
-                    temp.Add(book);
-                }
-            }
-
-            return temp.ToArray();
+            var k = keyword.ToLower();
+            return _context.Books.Where(book => book.Name.ToLower().Contains(k)
+                    || book.Publisher.ToLower().Contains(k)
+                    || book.ShortDescription.ToLower().Contains(k)
+                    || book.Tags.ToLower().Contains(k)
+                    || book.Authors.ToLower().Contains(k)).ToArray();
         }
         /// <summary>
         /// Thêm sách vào dữ liệu
@@ -75,8 +58,7 @@ namespace BookMan.ConsoleApp.DataServices
         /// <param name="book"></param>
         public void Insert(Book book)
         {
-            int LatestIndex = _context.Books.Count - 1;
-            int id = LatestIndex < 0 ? 1 : _context.Books[LatestIndex].Id + 1;
+            var id = _context.Books.Count == 0 ? 1 : _context.Books.Max(b => b.Id) + 1;
             book.Id = id;
             _context.Books.Add(book);
             _context.SaveChanges();
@@ -136,17 +118,7 @@ namespace BookMan.ConsoleApp.DataServices
         /// <returns></returns>
         public Book[] Get(Predicate<Book> predicate)
         {
-            List<Book> books = new List<Book>();
-
-            foreach (Book book in GetAll())
-            {
-                if (predicate(book))
-                {
-                    books.Add(book);
-                }
-            }
-
-            return books.ToArray();
+            return _context.Books.Where(b => predicate(b)).ToArray();
         }
 
         /// <summary>
@@ -155,6 +127,11 @@ namespace BookMan.ConsoleApp.DataServices
         public void ClearBook()
         {
             _context.Books.Clear();
+        }
+
+        public IEnumerable<IGrouping<string, Book>> Stats(Func<Book, string> keySelector)
+        {
+            return _context.Books.GroupBy(keySelector);
         }
     }
 }
