@@ -129,6 +129,11 @@ namespace BookMan.ConsoleApp.DataServices
             _context.Books.Clear();
         }
 
+        /// <summary>
+        /// Thống kê sách theo điều kiện
+        /// </summary>
+        /// <param name="keySelector">Hàm điều kiện trả về property cần thống kê</param>
+        /// <returns></returns>
         public IEnumerable<IGrouping<string, Book>> Stats(Func<Book, string> keySelector)
         {
             return _context.Books.GroupBy(keySelector);

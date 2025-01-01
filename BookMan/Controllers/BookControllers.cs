@@ -3,6 +3,7 @@
     using BookMan.ConsoleApp.DataServices;
     using BookMan.ConsoleApp.Framework;
     using Models;
+    using System;
     using Views;
     /// <summary>
     /// Controllers sách
@@ -166,6 +167,20 @@
         {
             Repository.ClearBook();
             Success($"Đã xóa toàn bộ dữ liệu sách!");
+        }
+
+        /// <summary>
+        /// Thống kê dữ liệu theo điều kiện
+        /// <code>
+        /// Ví dụ: keySelector = (Book b) => b.Authors
+        /// sẽ thống kê theo tác giả.
+        /// </code>
+        /// Tương tự như vậy, hàm trả về <b><i>property</i></b> gì thì sẽ thống kê theo <b><i>property</i></b> đó.
+        /// </summary>
+        public void Stats(Func<Book, string> keySelector)
+        {
+            var model = Repository.Stats(keySelector);
+            Render(new BookStatView(model));
         }
     }
 }

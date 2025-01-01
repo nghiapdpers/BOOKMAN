@@ -25,7 +25,11 @@ namespace BookMan.ConsoleApp.Controllers
             Information($"Tìm thấy {lFile.Length} cuốn sách....");
             foreach (var l in lFile)
             {
-                Repository.Insert(new() { Name = Path.GetFileNameWithoutExtension(l) });
+                Repository.Insert(new()
+                {
+                    Name = Path.GetFileNameWithoutExtension(l),
+                    File = l,
+                });
             }
             Success($"Đã thêm sách vào thư viện!");
         }

@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace BookMan.ConsoleApp.Views
 {
+    /// <summary>
+    /// Class hiển thị danh sách sách theo thống kê
+    /// </summary>
     internal class BookStatView : ViewBase<IEnumerable<IGrouping<string, Book>>>
     {
         public BookStatView(IEnumerable<IGrouping<string, Book>> books) : base(books) { }
@@ -18,8 +21,10 @@ namespace BookMan.ConsoleApp.Views
                 foreach (var b in g)
                 {
                     ViewHelp.Write($"[{b.Id}]", System.ConsoleColor.Magenta);
-                    ViewHelp.WriteLine($"{b.Name,-20}");
+                    ViewHelp.WriteLine($"{b.Name,-20}", b.Reading ? System.ConsoleColor.DarkYellow : System.ConsoleColor.White);
                 }
+
+                ViewHelp.WriteLine("");
             }
         }
     }

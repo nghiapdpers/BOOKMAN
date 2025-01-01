@@ -3,6 +3,7 @@ using BookMan.ConsoleApp.Framework;
 using BookMan.ConsoleApp.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace BookMan.ConsoleApp
 {
@@ -81,6 +82,8 @@ namespace BookMan.ConsoleApp
             {
                 "--all", "-a", "--book", "-b", "--shelf", "-sh"
             });
+
+            Options.AddListOptions("stat");
 
             Options.AddListOptions(new string[]
             {
@@ -240,6 +243,14 @@ namespace BookMan.ConsoleApp
                 {
                     bookControllers.Wipe();
                 }
+            });
+
+            Router.Register(
+            "stat",
+            (r) =>
+            {
+                //if (!r.IsValid()) throw notValidAction;
+                bookControllers.Stats(b => Path.GetDirectoryName(b.File));
             });
 
             Router.Register(new string[]
