@@ -1,8 +1,10 @@
 ﻿using BookMan.ConsoleApp.Controllers;
+using BookMan.ConsoleApp.DataServices;
 using BookMan.ConsoleApp.Framework;
 using BookMan.ConsoleApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace BookMan.ConsoleApp
@@ -85,6 +87,11 @@ namespace BookMan.ConsoleApp
 
             Options.AddListOptions("stat");
 
+            Options.AddListOptions("config", new string[]
+            {
+                "--current", "-c"
+            });
+
             Options.AddListOptions(new string[]
             {
                 "exit", "q", "quit"
@@ -94,6 +101,11 @@ namespace BookMan.ConsoleApp
             {
                 "cls", "clear"
             });
+
+            Options.AddListOptions(new string[]
+            {
+                "reload", "r"
+            });
         }
 
         /// <summary>
@@ -101,9 +113,14 @@ namespace BookMan.ConsoleApp
         /// </summary>
         /// <param name="bookControllers"></param>
         /// <param name="shellControllers"></param>
-        public static void PrepareRouter(BookControllers bookControllers, ShellControllers shellControllers)
+        public static void PrepareRouter()
         {
             Router Router = Router.Instance;
+            IDataAccess context = Config.Instance.IDataAccess;
+            BookControllers bookControllers = new(context);
+            ShellControllers shellControllers = new(context);
+            ConfigControllers configControllers = new();
+
             Router.Register(new string[]
             {
                 "help", "/?"
@@ -253,6 +270,28 @@ namespace BookMan.ConsoleApp
                 bookControllers.Stats(b => Path.GetDirectoryName(b.File));
             });
 
+            Router.Register(
+            "config",
+            (r) =>
+            {
+                if (!r.IsValid()) throw notValidAction;
+
+                if (r.ContainOptions(new string[] { "--current", "-c" }))
+                {
+                    configControllers.CurrentDataAccess();
+                }
+
+                if (r.Parameters.ContainsKey("promp"))
+                {
+                    configControllers.ConfigPrompText(r.Parameters["promp"]);
+                }
+
+                if (r.Parameters.ContainsKey("da"))
+                {
+                    configControllers.ConfigDataAccess(r.Parameters["da"]);
+                }
+            });
+
             Router.Register(new string[]
             {
                 "exit", "quit", "q"
@@ -278,6 +317,21 @@ namespace BookMan.ConsoleApp
             (r) =>
             {
                 Console.Clear();
+            });
+
+            Router.Register(new string[]
+            {
+                "reload", "r"
+            },
+            (r) =>
+            {
+                Console.Clear();
+#if DEBUG
+                Process.Start("BookMan.ConsoleApp.exe");
+#else
+                Process.Start(Environment.CommandLine);
+#endif
+                Environment.Exit(0);
             });
         }
 

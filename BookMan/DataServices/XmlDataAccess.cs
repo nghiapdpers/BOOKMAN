@@ -12,7 +12,7 @@ namespace BookMan.ConsoleApp.DataServices
     internal class XmlDataAccess : IDataAccess
     {
         public List<Book> Books { set; get; } = new List<Book>();
-        private readonly string _file = "data.xml";
+        private readonly string _file = Config.Instance.DataFile;
 
         /// <summary>
         /// Load dữ liệu từ local

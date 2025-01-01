@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BookMan.ConsoleApp" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataAccess" Type="System.String" Scope="User">
+      <Value Profile="(Default)">json</Value>
+    </Setting>
+    <Setting Name="PrompText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BookManCLI</Value>
+    </Setting>
+    <Setting Name="DataFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">data.json</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

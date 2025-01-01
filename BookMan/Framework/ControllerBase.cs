@@ -18,6 +18,8 @@ namespace BookMan.ConsoleApp.Framework
             Repository = new(context);
         }
 
+        public ControllerBase() { }
+
         /// <summary>
         /// Render ra một view
         /// </summary>

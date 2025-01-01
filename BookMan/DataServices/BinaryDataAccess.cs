@@ -11,7 +11,7 @@ namespace BookMan.ConsoleApp.DataServices
     internal class BinaryDataAccess : IDataAccess
     {
         public List<Book> Books { get; set; } = new List<Book>();
-        private readonly string _file = "data.dat";
+        private readonly string _file = Config.Instance.DataFile;
 
         /// <summary>
         /// Load dữ liệu từ local

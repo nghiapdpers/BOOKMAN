@@ -2,8 +2,6 @@
 
 namespace BookMan.ConsoleApp
 {
-    using BookMan.ConsoleApp.Controllers;
-    using BookMan.ConsoleApp.DataServices;
     using BookMan.ConsoleApp.Framework;
 
     internal partial class Program
@@ -12,19 +10,18 @@ namespace BookMan.ConsoleApp
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
-            IDataAccess context = new JsonDataAccess();
-            BookControllers controllers = new(context);
-            ShellControllers shellController = new(context);
             PrepareOptions();
-            PrepareRouter(controllers, shellController);
+            PrepareRouter();
+
+            var promp = Config.Instance.PrompText;
+
             while (true)
             {
+                ViewHelp.Write($"# {promp} >>> ", ConsoleColor.Yellow);
+                string input = Console.ReadLine();
+
                 try
                 {
-
-                    ViewHelp.Write("# BookManCLI >>> ", ConsoleColor.Yellow);
-                    string input = Console.ReadLine();
-
                     Router.Instance.Forward(input);
                 }
                 catch (Exception ex)
@@ -37,6 +34,10 @@ namespace BookMan.ConsoleApp
                     });
 
                     view.Render();
+                }
+                finally
+                {
+                    ViewHelp.WriteLine("");
                 }
             }
         }
