@@ -1,10 +1,11 @@
 ﻿namespace ColorfulAsciiArt
 {
-    internal interface IImageSource : IDisposable
+    public interface IImageSource : IDisposable
     {
         public int Width { get; }
         public int Height { get; }
         public float AspectRatio { get; }
-        Rgb GetPixel(int x, int y);
+        Argb GetPixelArgb(int x, int y);
+        Rgb GetPixelRgb(int x, int y);
     }
 }

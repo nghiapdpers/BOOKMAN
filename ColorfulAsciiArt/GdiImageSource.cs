@@ -22,7 +22,14 @@ namespace ColorfulAsciiArt
             _image.Dispose();
         }
 
-        public Rgb GetPixel(int x, int y)
+        public Argb GetPixelArgb(int x, int y)
+        {
+            var pixel = _image.GetPixel(x, y);
+
+            return new(pixel.A, pixel.R, pixel.G, pixel.B);
+        }
+
+        public Rgb GetPixelRgb(int x, int y)
         {
             var pixel = _image.GetPixel(x, y);
 

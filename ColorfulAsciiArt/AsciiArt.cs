@@ -2,19 +2,19 @@
 
 namespace ColorfulAsciiArt
 {
-    public struct AcsiiArt
+    public struct AsciiArt
     {
+        public string builder;
         public Formatter[] art;
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public AcsiiArt(Formatter[] art, int width, int height)
+        public AsciiArt(string builder, Formatter[] art, int width, int height)
         {
+            this.builder = builder;
             this.art = art;
             Width = width;
             Height = height;
-
-            
         }
     }
 }
