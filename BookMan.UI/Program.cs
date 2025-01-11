@@ -1,4 +1,5 @@
-﻿using ColorfulAsciiArt;
+﻿using AForge.Imaging.ColorReduction;
+using ColorfulAsciiArt;
 using System.Drawing;
 using AsciiArtInstance = ColorfulAsciiArt.ColorfulAsciiArt;
 
@@ -8,18 +9,25 @@ namespace BookMan.UI
     {
         private static void Main(string[] args)
         {
-            Image image = Image.FromFile("C:\\Users\\Nghia\\Pictures\\qrcode.png");
+            //Image image = Image.FromFile("C:\\Users\\nghia\\OneDrive\\Pictures\\cappie.jpg");
+            Image image = Image.FromFile("C:\\Users\\nghia\\OneDrive\\Pictures\\cappie.jpg");
+            Bitmap imageBitmap = new Bitmap(image);
 
-            Bitmap bitmap = (Bitmap)Bitmap.FromFile("C:\\Users\\Nghia\\Pictures\\qrcode.png");
+            ColorImageQuantizer ciq = new ColorImageQuantizer(new MedianCutQuantizer());
 
-            GdiImageSource source = new GdiImageSource(bitmap);
-            //GdiImageSource source2 = new GdiImageSource(bitmap2);
+            Color[] colorTable = ciq.CalculatePalette(imageBitmap, 16);
 
-            AsciiArt art = AsciiArtInstance.GenereateArtFromImage(source, 20);
-            //AsciiArt art2 = AsciiArtInstance.GenereateArtFromImage(source2);
-            Console.BackgroundColor = ConsoleColor.White;
+            Bitmap newImage = ciq.ReduceColors(imageBitmap, 16);
+
+            newImage.Save("demo2.png");
+
+            GdiImageSource source = new GdiImageSource(newImage);
+
+            AsciiArt art = AsciiArtInstance.GenereateArtFromImage(source, 15);
             AsciiArtInstance.Render(art);
-            //AsciiArtInstance.Render(art2);
+            image.Dispose();
+            source.Dispose();
+            newImage.Dispose();
         }
     }
 }
