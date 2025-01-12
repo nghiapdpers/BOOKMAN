@@ -1,5 +1,8 @@
 ﻿namespace ColorfulAsciiArt
 {
+    /// <summary>
+    /// Kiểu dữ liệu RGB
+    /// </summary>
     public struct Rgb
     {
         public byte Red;

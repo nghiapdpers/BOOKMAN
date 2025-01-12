@@ -2,14 +2,17 @@
 
 namespace ColorfulAsciiArt
 {
-    public struct AsciiArt
+    /// <summary>
+    /// Kiểu dữ liệu AsciiArt
+    /// </summary>
+    public struct Art
     {
         public string builder;
         public Formatter[] art;
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public AsciiArt(string builder, Formatter[] art, int width, int height)
+        public Art(string builder, Formatter[] art, int width, int height)
         {
             this.builder = builder;
             this.art = art;

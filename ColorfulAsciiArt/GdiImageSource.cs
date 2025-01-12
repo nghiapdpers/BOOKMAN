@@ -2,6 +2,9 @@
 
 namespace ColorfulAsciiArt
 {
+    /// <summary>
+    /// Class nguồn ảnh
+    /// </summary>
     public class GdiImageSource : IImageSource
     {
         private readonly Bitmap _image;
@@ -17,11 +20,20 @@ namespace ColorfulAsciiArt
 
         public float AspectRatio => _image.Width / (float)_image.Height;
 
+        /// <summary>
+        /// Dispose ảnh để giải phóng dung lượng.
+        /// </summary>
         public void Dispose()
         {
             _image.Dispose();
         }
 
+        /// <summary>
+        /// Lấy color ARGB của một pixel theo tọa độ x,y
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public Argb GetPixelArgb(int x, int y)
         {
             var pixel = _image.GetPixel(x, y);
@@ -29,6 +41,12 @@ namespace ColorfulAsciiArt
             return new(pixel.A, pixel.R, pixel.G, pixel.B);
         }
 
+        /// <summary>
+        ///  Lấy color RGB của một pixel theo tọa độ x,y
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public Rgb GetPixelRgb(int x, int y)
         {
             var pixel = _image.GetPixel(x, y);

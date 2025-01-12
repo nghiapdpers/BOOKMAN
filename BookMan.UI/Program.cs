@@ -10,7 +10,7 @@ namespace BookMan.UI
             Image image = Image.FromFile("C:\\Users\\nghia\\OneDrive\\Pictures\\cappie.jpg");
             Bitmap imageBitmap = new Bitmap(image);
 
-            var art = new ColorfulAsciiArt.ColorfulAsciiArt(imageBitmap, 200);
+            var art = new ConsoleArt(imageBitmap, 200);
 
             art.Render();
 

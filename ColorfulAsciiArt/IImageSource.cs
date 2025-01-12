@@ -1,7 +1,8 @@
-﻿using System.Drawing;
-
-namespace ColorfulAsciiArt
+﻿namespace ColorfulAsciiArt
 {
+    /// <summary>
+    /// Interface nguồn ảnh
+    /// </summary>
     public interface IImageSource : IDisposable
     {
         public int Width { get; }

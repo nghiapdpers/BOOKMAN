@@ -1,5 +1,8 @@
 ﻿namespace ColorfulAsciiArt
 {
+    /// <summary>
+    /// Kiểu dữ liệu ARGB
+    /// </summary>
     public struct Argb
     {
         public byte Alpha;

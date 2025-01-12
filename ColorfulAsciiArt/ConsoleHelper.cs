@@ -2,6 +2,9 @@
 
 namespace ColorfulAsciiArt
 {
+    /// <summary>
+    /// Class hỗ trợ chức năng nâng cao cho console
+    /// </summary>
     public static class ConsoleHelper
     {
         private const int FixedWidthTrueType = 54;
@@ -40,6 +43,13 @@ namespace ColorfulAsciiArt
             public string FontName;
         }
 
+        /// <summary>
+        /// Set fonts của console window.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="fontSize"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ComponentModel.Win32Exception"></exception>
         public static FontInfo[] SetCurrentFont(string font, short fontSize = 0)
         {
             //Console.WriteLine("Set Current Font: " + font);
@@ -86,6 +96,9 @@ namespace ColorfulAsciiArt
             }
         }
 
+        /// <summary>
+        /// Mở rộng màn hình console.
+        /// </summary>
         public static void Maximize()
         {
             IntPtr ThisConsole = GetConsoleWindow();

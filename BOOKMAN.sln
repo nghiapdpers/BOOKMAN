@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMan.UI", "BookMan.UI\Bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMan.EbookCore", "BookMan.EbookCore\BookMan.EbookCore.csproj", "{C08C6BE2-B3ED-4D06-9A78-DD2A7123CFB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorfulAsciiArt", "ColorfulAsciiArt\ColorfulAsciiArt.csproj", "{57FF44F8-7887-427A-ABF5-F45FA6036038}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleArt", "ColorfulAsciiArt\ConsoleArt.csproj", "{57FF44F8-7887-427A-ABF5-F45FA6036038}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

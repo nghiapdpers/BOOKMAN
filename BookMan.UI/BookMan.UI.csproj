@@ -9,7 +9,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\BookMan\BookMan.ConsoleApp.csproj" />
-		<ProjectReference Include="..\ColorfulAsciiArt\ColorfulAsciiArt.csproj" />
+		<ProjectReference Include="..\ColorfulAsciiArt\ConsoleArt.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
