@@ -1,4 +1,6 @@
-﻿namespace ColorfulAsciiArt
+﻿using System.Drawing;
+
+namespace ColorfulAsciiArt
 {
     public interface IImageSource : IDisposable
     {

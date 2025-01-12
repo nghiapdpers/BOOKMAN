@@ -3,44 +3,60 @@
 namespace ColorfulAsciiArt
 {
     using Colorful;
+
     public class ColorfulAsciiArt
     {
-        public static string[] AsciiChars = new string[] { "@", "%", "#", "*", "+", "=", "-", ":", ",", ".", " " };
+        public AsciiArt Art { get; set; }
 
-        public static void Render(AsciiArt art)
+        public ColorfulAsciiArt(Bitmap image, int width)
         {
-            Console.WriteLineFormatted(art.builder, Color.Gray, art.art);
+            var imageResized = AForgeHelper.ReduceColor(GetReSizedImage(image, width), 12);
+            var source = new GdiImageSource(imageResized);
+            Art = GenereateArtFromImage(source);
         }
 
-        public static AsciiArt GenereateArtFromImage(IImageSource image, float scale)
+        public void Render()
         {
-            var scaleRatio = Math.Floor(image.AspectRatio * scale);
-            var outputWidth = (int)Math.Floor(image.Width / scaleRatio);
-            var outputHeight = (int)Math.Floor(outputWidth / image.AspectRatio);
-            var widthStep = image.Width / outputWidth;
-            var heightStep = image.Height / outputHeight;
+            ConsoleHelper.SetCurrentFont("Consolas", 5);
+            ConsoleHelper.Maximize();
+            Console.WriteLineFormatted(Art.builder, Color.Black, Art.art);
+            Console.Read();
+        }
+
+        private AsciiArt GenereateArtFromImage(IImageSource image)
+        {
+            var width = image.Width;
+            var height = image.Height;
 
             string builder = "";
-            Formatter[] formatter = new Formatter[outputWidth * outputHeight];
+            Formatter[] formatter = new Formatter[width * height];
             var index = 0;
 
-            for (var h = 0; h < outputHeight; h++)
+            for (var h = 0; h < height; h++)
             {
-                for (var w = 0; w < outputWidth; w++)
+                for (var w = 0; w < width; w++)
                 {
-                    var pixelColor = image.GetPixelArgb(w * widthStep, h * heightStep);
-                    var grayValue = (int)(pixelColor.Red * 0.3 + pixelColor.Green * 0.59 + pixelColor.Blue * 0.11);
-                    var asciiChar = AsciiChars[grayValue * (AsciiChars.Length - 1) / 255];
-                    var color = Color.FromArgb(pixelColor.Red, pixelColor.Green, pixelColor.Blue);
+                    var pixelColor = image.GetPixelArgb(w, h);
+
+                    Color color = Color.FromArgb(pixelColor.Alpha, pixelColor.Red, pixelColor.Green, pixelColor.Blue);
 
                     builder += $"{{{index}}}";
-                    formatter[index] = new(asciiChar, color);
+                    formatter[index] = new("██", color);
                     index++;
                 }
                 builder += "\n";
             }
 
-            return new(builder, formatter, outputWidth, outputHeight);
+            image.Dispose();
+
+            return new(builder, formatter, width, height);
+        }
+
+        private Bitmap GetReSizedImage(Bitmap inputBitmap, int width)
+        {
+            int height = (int)Math.Ceiling((double)inputBitmap.Height * width / inputBitmap.Width);
+
+            return AForgeHelper.ResizeIamge(inputBitmap, width, height);
         }
     }
 }
