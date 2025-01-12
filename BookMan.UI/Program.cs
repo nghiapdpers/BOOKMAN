@@ -1,5 +1,4 @@
-﻿using ColorfulAsciiArt;
-using System.Drawing;
+﻿using Spectre.Console;
 
 namespace BookMan.UI
 {
@@ -7,15 +6,7 @@ namespace BookMan.UI
     {
         private static void Main(string[] args)
         {
-            Image image = Image.FromFile("C:\\Users\\nghia\\OneDrive\\Pictures\\cappie.jpg");
-            Bitmap imageBitmap = new Bitmap(image);
-
-            var art = new ConsoleArt(imageBitmap, 200);
-
-            art.Render();
-
-            imageBitmap.Dispose();
-            image.Dispose();
+            AnsiConsole.Markup("[underline #fff]Hello[/] World!");
         }
     }
 }
